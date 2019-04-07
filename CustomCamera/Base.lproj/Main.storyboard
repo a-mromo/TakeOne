@@ -31,13 +31,13 @@
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kim-s5-0rD" userLabel="Camera">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kim-s5-0rD" userLabel="Camera">
                                         <rect key="frame" x="290" y="10" width="30" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="30" id="KKd-Gs-q0I"/>
                                             <constraint firstAttribute="height" constant="30" id="WVN-Gn-M7z"/>
                                         </constraints>
-                                        <state key="normal" image="Camera"/>
+                                        <state key="normal" image="Camera_Icon"/>
                                         <connections>
                                             <action selector="cameraToggleTapped:" destination="rQ0-1Y-YYP" eventType="touchUpInside" id="if9-5G-lSx"/>
                                         </connections>
@@ -91,6 +91,7 @@
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.29999999999999999" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="tfk-RE-PY5" firstAttribute="width" secondItem="7yT-gL-mbm" secondAttribute="width" id="0w5-qQ-ZWJ"/>
+                            <constraint firstItem="kTU-Uq-bDP" firstAttribute="trailing" secondItem="kim-s5-0rD" secondAttribute="trailing" constant="55" id="6L5-Rt-LBd"/>
                             <constraint firstItem="tfk-RE-PY5" firstAttribute="centerY" secondItem="kTU-Uq-bDP" secondAttribute="centerY" id="EGi-gZ-gQd"/>
                             <constraint firstItem="aFI-dN-1yn" firstAttribute="top" secondItem="kTU-Uq-bDP" secondAttribute="top" id="JOe-tP-KxR"/>
                             <constraint firstItem="aFI-dN-1yn" firstAttribute="leading" secondItem="kTU-Uq-bDP" secondAttribute="leading" id="JfH-f5-oFW"/>
@@ -116,7 +117,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Camera" width="16" height="16"/>
+        <image name="Camera_Icon" width="28" height="21"/>
         <image name="Capture" width="64" height="64"/>
     </resources>
 </document>
