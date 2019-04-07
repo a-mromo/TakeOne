@@ -25,32 +25,6 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aFI-dN-1yn" userLabel="TopControls">
                                 <rect key="frame" x="0.0" y="20" width="375" height="50"/>
                                 <subviews>
-                                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Yrc-k1-c7b">
-                                        <rect key="frame" x="9" y="7.5" width="68" height="35"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="35" id="n0N-WZ-Zcj"/>
-                                            <constraint firstAttribute="width" constant="68" id="tCe-2F-ik0"/>
-                                        </constraints>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                <integer key="value" value="18"/>
-                                            </userDefinedRuntimeAttribute>
-                                        </userDefinedRuntimeAttributes>
-                                    </view>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pgO-Ig-wZa" userLabel="FlashButton">
-                                        <rect key="frame" x="20" y="14" width="16" height="22"/>
-                                        <state key="normal" image="Flash"/>
-                                        <connections>
-                                            <action selector="flashTapped:" destination="rQ0-1Y-YYP" eventType="touchUpInside" id="7MG-VK-I2z"/>
-                                        </connections>
-                                    </button>
-                                    <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="OFF" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oZO-RP-hzM" customClass="InsetLabel" customModule="CustomCamera" customModuleProvider="target">
-                                        <rect key="frame" x="40" y="14.5" width="31.5" height="21"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CZ1-gG-U29">
                                         <rect key="frame" x="146.5" y="15.5" width="82" height="19.5"/>
                                         <fontDescription key="fontDescription" name="CourierNewPS-BoldMT" family="Courier New" pointSize="17"/>
@@ -82,21 +56,14 @@
                                 </subviews>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.32065331380000001" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstItem="Yrc-k1-c7b" firstAttribute="centerY" secondItem="pgO-Ig-wZa" secondAttribute="centerY" id="1Mg-eS-giF"/>
                                     <constraint firstItem="rAM-25-dQX" firstAttribute="leading" secondItem="kim-s5-0rD" secondAttribute="trailing" constant="16" id="4IQ-CY-eYH"/>
                                     <constraint firstAttribute="height" constant="50" id="FN1-46-LSW"/>
                                     <constraint firstAttribute="trailing" secondItem="rAM-25-dQX" secondAttribute="trailing" constant="4" id="L9i-aI-E6b"/>
                                     <constraint firstItem="rAM-25-dQX" firstAttribute="centerY" secondItem="aFI-dN-1yn" secondAttribute="centerY" id="M5t-Ef-pcN"/>
-                                    <constraint firstItem="CZ1-gG-U29" firstAttribute="leading" relation="lessThanOrEqual" secondItem="oZO-RP-hzM" secondAttribute="trailing" constant="106.5" id="N48-81-GwO"/>
                                     <constraint firstItem="kim-s5-0rD" firstAttribute="centerY" secondItem="aFI-dN-1yn" secondAttribute="centerY" id="Qh9-fp-xYg"/>
-                                    <constraint firstItem="Yrc-k1-c7b" firstAttribute="leading" secondItem="aFI-dN-1yn" secondAttribute="leading" constant="9" id="ah7-K6-TgF"/>
-                                    <constraint firstItem="oZO-RP-hzM" firstAttribute="centerY" secondItem="pgO-Ig-wZa" secondAttribute="centerY" id="cek-66-mGY"/>
-                                    <constraint firstItem="pgO-Ig-wZa" firstAttribute="leading" secondItem="aFI-dN-1yn" secondAttribute="leading" constant="20" id="eAT-PC-MWD"/>
                                     <constraint firstItem="kim-s5-0rD" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="CZ1-gG-U29" secondAttribute="trailing" constant="20" id="p05-eM-dFy"/>
                                     <constraint firstItem="CZ1-gG-U29" firstAttribute="centerX" secondItem="aFI-dN-1yn" secondAttribute="centerX" id="wSo-hV-b2R"/>
                                     <constraint firstItem="CZ1-gG-U29" firstAttribute="centerY" secondItem="aFI-dN-1yn" secondAttribute="centerY" id="xGV-iH-Igj"/>
-                                    <constraint firstItem="oZO-RP-hzM" firstAttribute="leading" secondItem="aFI-dN-1yn" secondAttribute="leading" constant="40" id="yPd-XO-Kdz"/>
-                                    <constraint firstItem="pgO-Ig-wZa" firstAttribute="centerY" secondItem="aFI-dN-1yn" secondAttribute="centerY" id="yzZ-oy-1eJ"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ojB-FT-8wW" userLabel="BottomControls">
@@ -166,9 +133,6 @@
                     <connections>
                         <outlet property="cameraPreview" destination="tfk-RE-PY5" id="g6F-A8-2p0"/>
                         <outlet property="captureButton" destination="Z2T-Td-ZSe" id="ORh-9I-0iE"/>
-                        <outlet property="flashButton" destination="pgO-Ig-wZa" id="gJH-nW-zwU"/>
-                        <outlet property="flashLabel" destination="oZO-RP-hzM" id="eIM-kj-Slq"/>
-                        <outlet property="flashToggleView" destination="Yrc-k1-c7b" id="ddO-TW-L3h"/>
                         <outlet property="modePicker" destination="ycB-Q3-bBy" id="bDr-eL-KGH"/>
                         <outlet property="thumbnailButton" destination="gyn-ZQ-iLV" id="LIa-1O-5zz"/>
                         <outlet property="timeLabel" destination="CZ1-gG-U29" id="KJG-n6-4aH"/>
@@ -182,7 +146,6 @@
     <resources>
         <image name="Camera" width="16" height="16"/>
         <image name="Capture" width="64" height="64"/>
-        <image name="Flash" width="16" height="16"/>
         <image name="clear" width="14" height="14"/>
     </resources>
 </document>

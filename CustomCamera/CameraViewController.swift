@@ -30,19 +30,12 @@ class CameraViewController: UIViewController {
         static var all: [CaptureMode] = [.photo, .video]
     }
     
-    enum FlashMode {
-        case on, off, auto
-    }
-    
     var captureMode = CaptureMode.photo
     
     var focusMarker: UIImageView!
-    var flashMode = FlashMode.off
     var exposureMarker: UIImageView!
     
-    @IBOutlet weak var flashLabel: UILabel!
-    @IBOutlet weak var flashButton: UIButton!
-    @IBOutlet var flashToggleView: UIView!
+    
     @IBOutlet weak var thumbnailButton: UIButton!
     @IBOutlet weak var cameraPreview: UIView!
     @IBOutlet weak var captureButton: UIButton!
@@ -102,10 +95,6 @@ class CameraViewController: UIViewController {
         previewLayer.videoGravity = .resizeAspectFill
         cameraPreview.layer.addSublayer(previewLayer)
         
-        let tapForFlashLabel = UITapGestureRecognizer(target: self, action: #selector(flashLabelTapped(sender:)))
-        flashLabel.addGestureRecognizer(tapForFlashLabel)
-        flashLabel.isUserInteractionEnabled = true
-        
         let tapForFocus = UITapGestureRecognizer(target: self, action: #selector(tapToFocus(_:)))
         tapForFocus.numberOfTapsRequired = 1
         cameraPreview.addGestureRecognizer(tapForFocus)
@@ -129,7 +118,6 @@ class CameraViewController: UIViewController {
         super.viewDidLoad()
         setupSessionAndPreview()
         startSession()
-        setupTintedIcons()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -153,53 +141,6 @@ class CameraViewController: UIViewController {
         return true
     }
     
-    func setupTintedIcons() {
-        let flashIcon = UIImage(named: "Flash")
-        let tintedImage = flashIcon?.withRenderingMode(UIImage.RenderingMode.alwaysTemplate)
-        flashButton.setImage(tintedImage, for: .normal)
-        flashButton.tintColor = .white
-    }
-    
-    func flashOffSetup(){
-        flashLabel.font = UIFont.systemFont(ofSize: 17.0)
-        flashLabel.text = "OFF"
-        flashToggleView.isHidden = true
-        flashLabel.textColor = .white
-        flashButton.tintColor = .white
-        flashMode = .off
-    }
-    
-    func flashOnSetup(){
-        flashToggleView.isHidden = false
-        flashLabel.font = UIFont.boldSystemFont(ofSize: 17.0)
-        flashLabel.text = "ON"
-        flashLabel.textColor = .black
-        flashButton.tintColor = .black
-        flashMode = .on
-    }
-    
-    func flashAutoSetup() {
-        flashOffSetup()
-        flashLabel.text = "AUTO"
-        flashMode = .auto
-    }
-    
-    @objc func flashLabelTapped(sender: UITapGestureRecognizer) {
-        toggleFlash()
-    }
-    
-    func toggleFlash() {
-        if captureMode == .photo {
-            switch flashMode {
-            case .on:
-                flashAutoSetup()
-            case .off:
-                flashOnSetup()
-            case .auto:
-                flashOffSetup()
-            }
-        }
-    }
     
     
     @IBAction func clearTapped(_ sender: Any) {
@@ -207,9 +148,6 @@ class CameraViewController: UIViewController {
         stopSession()
     }
     
-    @IBAction func flashTapped(_ sender: Any) {
-        toggleFlash()
-    }
     
     @IBAction func cameraToggleTapped(_ sender: Any) {
         toggleCameras()
@@ -467,12 +405,6 @@ extension CameraViewController: AVCapturePhotoCaptureDelegate {
         }
         
         let settings = AVCapturePhotoSettings()
-        
-        switch flashMode {
-        case .on: settings.flashMode = .on
-        case .off: settings.flashMode = .off
-        case .auto: settings.flashMode = .auto
-        }
         
         settings.isAutoStillImageStabilizationEnabled = true
         settings.isHighResolutionPhotoEnabled = true
