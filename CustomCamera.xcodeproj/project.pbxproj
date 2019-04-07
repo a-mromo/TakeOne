@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		5D1732F22256FDA400E140E4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1732F12256FDA400E140E4 /* AppDelegate.swift */; };
-		5D1732F42256FDA400E140E4 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1732F32256FDA400E140E4 /* ViewController.swift */; };
+		5D1732F42256FDA400E140E4 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1732F32256FDA400E140E4 /* CameraViewController.swift */; };
 		5D1732F72256FDA400E140E4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D1732F52256FDA400E140E4 /* Main.storyboard */; };
 		5D1732F92256FDA600E140E4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5D1732F82256FDA600E140E4 /* Assets.xcassets */; };
 		5D1732FC2256FDA600E140E4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D1732FA2256FDA600E140E4 /* LaunchScreen.storyboard */; };
@@ -36,7 +36,7 @@
 /* Begin PBXFileReference section */
 		5D1732EE2256FDA400E140E4 /* CustomCamera.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CustomCamera.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D1732F12256FDA400E140E4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		5D1732F32256FDA400E140E4 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		5D1732F32256FDA400E140E4 /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 		5D1732F62256FDA400E140E4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		5D1732F82256FDA600E140E4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5D1732FB2256FDA600E140E4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -98,7 +98,7 @@
 			isa = PBXGroup;
 			children = (
 				5D1732F12256FDA400E140E4 /* AppDelegate.swift */,
-				5D1732F32256FDA400E140E4 /* ViewController.swift */,
+				5D1732F32256FDA400E140E4 /* CameraViewController.swift */,
 				5D1732F52256FDA400E140E4 /* Main.storyboard */,
 				5D1732F82256FDA600E140E4 /* Assets.xcassets */,
 				5D1732FA2256FDA600E140E4 /* LaunchScreen.storyboard */,
@@ -256,7 +256,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5D1732F42256FDA400E140E4 /* ViewController.swift in Sources */,
+				5D1732F42256FDA400E140E4 /* CameraViewController.swift in Sources */,
 				5D1732F22256FDA400E140E4 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -433,13 +433,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = NQWY95C954;
+				DEVELOPMENT_TEAM = NZ3CN8JH2Y;
 				INFOPLIST_FILE = CustomCamera/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = agustinoromo.CustomCamera;
+				PRODUCT_BUNDLE_IDENTIFIER = agustinoromo.CustomCam;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -451,13 +451,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = NQWY95C954;
+				DEVELOPMENT_TEAM = NZ3CN8JH2Y;
 				INFOPLIST_FILE = CustomCamera/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = agustinoromo.CustomCamera;
+				PRODUCT_BUNDLE_IDENTIFIER = agustinoromo.CustomCam;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";

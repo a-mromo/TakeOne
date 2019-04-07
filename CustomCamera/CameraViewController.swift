@@ -1,0 +1,672 @@
+//
+//  ViewController.swift
+//  CustomCamera
+//
+//  Created by Agustin Mendoza Romo on 4/4/19.
+//  Copyright © 2019 Agustin Mendoza Romo. All rights reserved.
+//
+
+import UIKit
+
+import UIKit
+import AVFoundation
+import Photos
+import MobileCoreServices
+
+class CameraViewController: UIViewController {
+    
+    let captureSession = AVCaptureSession()
+    var previewLayer: AVCaptureVideoPreviewLayer!
+    var activeInput: AVCaptureDeviceInput!
+    let imageOutput = AVCapturePhotoOutput()
+    let movieOutput = AVCaptureMovieFileOutput()
+    
+    let locationManager = CLLocationManager()
+    var currentUserLocation: CLLocation?
+    
+    
+    enum CaptureMode: String {
+        case photo, video
+        static var all: [CaptureMode] = [.photo, .video]
+    }
+    
+    enum FlashMode {
+        case on, off, auto
+    }
+    
+    var captureMode = CaptureMode.photo
+    
+    var focusMarker: UIImageView!
+    var flashMode = FlashMode.off
+    var exposureMarker: UIImageView!
+    
+    @IBOutlet weak var flashLabel: UILabel!
+    @IBOutlet weak var flashButton: UIButton!
+    @IBOutlet var flashToggleView: UIView!
+    @IBOutlet weak var thumbnailButton: UIButton!
+    @IBOutlet weak var cameraPreview: UIView!
+    @IBOutlet weak var captureButton: UIButton!
+    @IBOutlet weak var modePicker: UIPickerView!
+    @IBOutlet weak var timeLabel: UILabel!
+    
+    fileprivate var adjustingExposureContext: String = ""
+    fileprivate var updateTimer: Timer!
+    
+    var flashIsActive = false
+    
+    
+    func setupSessionAndPreview() {
+        captureSession.sessionPreset = .high
+        let camera = AVCaptureDevice.default(for: .video)
+        
+        do {
+            let input = try AVCaptureDeviceInput(device: camera!)
+            if captureSession.canAddInput(input) {
+                captureSession.addInput(input)
+                activeInput = input
+            }
+        }
+        catch {
+            print("Error setting up", error)
+        }
+        imageOutput.isHighResolutionCaptureEnabled = true
+        if captureSession.canAddOutput(imageOutput) {
+            captureSession.addOutput(imageOutput)
+        }
+        
+        // Setup Microphone
+        let microphone = AVCaptureDevice.default(for: AVMediaType.audio)
+        
+        do {
+            let micInput = try AVCaptureDeviceInput(device: microphone!)
+            if captureSession.canAddInput(micInput) {
+                captureSession.addInput(micInput)
+            }
+        } catch {
+            print("Error setting device audio input: \(error)")
+            return
+        }
+        
+        // Still image output
+        if captureSession.canAddOutput(imageOutput) {
+            captureSession.addOutput(imageOutput)
+        }
+        
+        // Movie output
+        if captureSession.canAddOutput(movieOutput) {
+            captureSession.addOutput(movieOutput)
+        }
+        
+        previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
+        previewLayer.frame = cameraPreview.bounds
+        previewLayer.videoGravity = .resizeAspectFill
+        cameraPreview.layer.addSublayer(previewLayer)
+        
+        let tapForFlashLabel = UITapGestureRecognizer(target: self, action: #selector(flashLabelTapped(sender:)))
+        flashLabel.addGestureRecognizer(tapForFlashLabel)
+        flashLabel.isUserInteractionEnabled = true
+        
+        let tapForFocus = UITapGestureRecognizer(target: self, action: #selector(tapToFocus(_:)))
+        tapForFocus.numberOfTapsRequired = 1
+        cameraPreview.addGestureRecognizer(tapForFocus)
+        
+        let tapForExposure = UITapGestureRecognizer(target: self, action: #selector(tapToExpose(_:)))
+        tapForExposure.numberOfTapsRequired = 2
+        cameraPreview.addGestureRecognizer(tapForExposure)
+        
+        tapForFocus.require(toFail: tapForExposure)
+        
+        focusMarker = UIImageView(image: UIImage(named:"Focus"))
+        focusMarker.isHidden = true
+        cameraPreview.addSubview(focusMarker)
+        
+        exposureMarker = UIImageView(image: UIImage(named:"Exposure"))
+        exposureMarker.isHidden = true
+        cameraPreview.addSubview(exposureMarker)
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupSessionAndPreview()
+        startSession()
+        setupTintedIcons()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        previewLayer.frame = cameraPreview.bounds
+        
+        let connection = imageOutput.connection(with: AVMediaType.video)
+        if (connection?.isVideoOrientationSupported)! {
+            connection?.videoOrientation = currentVideoOrientation()
+        }
+    }
+    
+    deinit {
+        stopSession()
+    }
+    
+    override var prefersStatusBarHidden: Bool {
+        return true
+    }
+    
+    func setupTintedIcons() {
+        let flashIcon = UIImage(named: "Flash")
+        let tintedImage = flashIcon?.withRenderingMode(UIImage.RenderingMode.alwaysTemplate)
+        flashButton.setImage(tintedImage, for: .normal)
+        flashButton.tintColor = .white
+    }
+    
+    func flashOffSetup(){
+        flashLabel.font = UIFont.systemFont(ofSize: 17.0)
+        flashLabel.text = "OFF"
+        flashToggleView.isHidden = true
+        flashLabel.textColor = .white
+        flashButton.tintColor = .white
+        flashMode = .off
+    }
+    
+    func flashOnSetup(){
+        flashToggleView.isHidden = false
+        flashLabel.font = UIFont.boldSystemFont(ofSize: 17.0)
+        flashLabel.text = "ON"
+        flashLabel.textColor = .black
+        flashButton.tintColor = .black
+        flashMode = .on
+    }
+    
+    func flashAutoSetup() {
+        flashOffSetup()
+        flashLabel.text = "AUTO"
+        flashMode = .auto
+    }
+    
+    @objc func flashLabelTapped(sender: UITapGestureRecognizer) {
+        toggleFlash()
+    }
+    
+    func toggleFlash() {
+        if captureMode == .photo {
+            switch flashMode {
+            case .on:
+                flashAutoSetup()
+            case .off:
+                flashOnSetup()
+            case .auto:
+                flashOffSetup()
+            }
+        }
+    }
+    
+    
+    @IBAction func clearTapped(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
+        stopSession()
+    }
+    
+    @IBAction func flashTapped(_ sender: Any) {
+        toggleFlash()
+    }
+    
+    @IBAction func cameraToggleTapped(_ sender: Any) {
+        toggleCameras()
+    }
+    
+    @IBAction func thumbnailTapped(_ sender: Any) {
+        startMediaBrowserFromViewController(viewController: self, usingDelegate: self)
+    }
+    
+    @IBAction func captureTapped(_ sender: Any) {
+        if captureMode == .photo {
+            capturePhoto()
+        }
+        else {
+            captureMovie()
+        }
+    }
+}
+
+extension CameraViewController {
+    func toggleCameras() {
+        
+        guard !movieOutput.isRecording else {
+            return
+        }
+        
+        let discoverySession =
+            AVCaptureDevice.DiscoverySession(deviceTypes: [.builtInWideAngleCamera],
+                                             mediaType: AVMediaType.video,
+                                             position: AVCaptureDevice.Position.unspecified)
+        
+        let newPosition: AVCaptureDevice.Position
+        switch activeInput.device.position {
+        case .back:
+            newPosition = .front
+        case .front:
+            newPosition = .back
+        case .unspecified:
+            newPosition = .back
+        }
+        
+        guard let newCamera = discoverySession.devices
+            .first(where: { $0.position == newPosition }) else {
+                return
+        }
+        
+        // Create new input and update capture session.
+        do {
+            let input = try AVCaptureDeviceInput(device: newCamera)
+            captureSession.beginConfiguration()
+            
+            captureSession.removeInput(activeInput)
+            
+            if captureSession.canAddInput(input) {
+                captureSession.addInput(input)
+                activeInput = input
+            } else {
+                captureSession.addInput(activeInput)
+            }
+            captureSession.commitConfiguration()
+        } catch {
+            print("Error switching cameras: \(error)")
+        }
+    }
+}
+
+
+extension CameraViewController {
+    func videoQueue() -> DispatchQueue {
+        return DispatchQueue.global(qos: .default)
+    }
+    
+    func startSession() {
+        if !captureSession.isRunning {
+            videoQueue().async {
+                self.captureSession.startRunning()
+            }
+        }
+    }
+    
+    func stopSession() {
+        if captureSession.isRunning {
+            videoQueue().async {
+                self.captureSession.stopRunning()
+            }
+        }
+    }
+}
+
+
+extension CameraViewController {
+    
+    func showMarkerAtPoint(_ point: CGPoint, marker: UIImageView) {
+        marker.center = point
+        marker.isHidden = false
+        
+        UIView.animate(withDuration: 0.15,
+                       delay: 0.0,
+                       options: [],
+                       animations: {
+                        marker.layer.transform = CATransform3DMakeScale(0.5, 0.5, 1.0)
+        }) { _ in
+            let popTime = DispatchTime.now() + 0.5
+            DispatchQueue.main.asyncAfter(deadline: popTime, execute: {
+                marker.isHidden = true
+                marker.transform = .identity
+            })
+        }
+    }
+    
+    // MARK: Focus Methods
+    @objc func tapToFocus(_ recognizer: UIGestureRecognizer) {
+        if activeInput.device.isFocusPointOfInterestSupported {
+            let point = recognizer.location(in: cameraPreview)
+            let pointOfInterest = previewLayer.captureDevicePointConverted(fromLayerPoint: point)
+            showMarkerAtPoint(point, marker: focusMarker)
+            focusAtPoint(pointOfInterest)
+        }
+    }
+    
+    func focusAtPoint(_ point: CGPoint) {
+        let device = activeInput.device
+        // Make sure the device supports focus on POI and Auto Focus.
+        if (device.isFocusPointOfInterestSupported) &&
+            (device.isFocusModeSupported(AVCaptureDevice.FocusMode.autoFocus)) {
+            do {
+                try device.lockForConfiguration()
+                device.focusPointOfInterest = point
+                device.focusMode = AVCaptureDevice.FocusMode.autoFocus
+                device.unlockForConfiguration()
+            } catch {
+                print("Error focusing on POI: \(error)")
+            }
+        }
+    }
+    
+    // MARK: Exposure Methods
+    @objc func tapToExpose(_ recognizer: UIGestureRecognizer) {
+        if activeInput.device.isExposurePointOfInterestSupported {
+            let point = recognizer.location(in: cameraPreview)
+            let pointOfInterest = previewLayer.captureDevicePointConverted(fromLayerPoint: point)
+            showMarkerAtPoint(point, marker: exposureMarker)
+            exposeAtPoint(pointOfInterest)
+        }
+    }
+    
+    func exposeAtPoint(_ point: CGPoint) {
+        let device = activeInput.device
+        if (device.isExposurePointOfInterestSupported) &&
+            (device.isExposureModeSupported(.continuousAutoExposure)) {
+            do {
+                try device.lockForConfiguration()
+                device.exposurePointOfInterest = point
+                device.exposureMode = .continuousAutoExposure
+                
+                if (device.isExposureModeSupported(.locked)) {
+                    device.addObserver(self,
+                                       forKeyPath: "adjustingExposure",
+                                       options: NSKeyValueObservingOptions.new,
+                                       context: &adjustingExposureContext)
+                    
+                    device.unlockForConfiguration()
+                }
+            } catch {
+                print("Error exposing on POI: \(error)")
+            }
+        }
+    }
+    
+    override func observeValue(forKeyPath keyPath: String?,
+                               of object: Any?,
+                               change: [NSKeyValueChangeKey : Any]?,
+                               context: UnsafeMutableRawPointer?) {
+        
+        if context == &adjustingExposureContext {
+            let device = object as! AVCaptureDevice
+            if !device.isAdjustingExposure &&
+                device.isExposureModeSupported(AVCaptureDevice.ExposureMode.locked) {
+                (object as AnyObject).removeObserver(self,
+                                                     forKeyPath: "adjustingExposure",
+                                                     context: &adjustingExposureContext)
+                
+                DispatchQueue.main.async(execute: { () -> Void in
+                    do {
+                        try device.lockForConfiguration()
+                        device.exposureMode = AVCaptureDevice.ExposureMode.locked
+                        device.unlockForConfiguration()
+                    } catch {
+                        print("Error exposing on POI: \(error)")
+                    }
+                })
+                
+            }
+        } else {
+            super.observeValue(forKeyPath: keyPath,
+                               of: object,
+                               change: change,
+                               context: context)
+        }
+    }
+}
+
+extension CameraViewController {
+    // MARK: - Saving photo to photo album
+    // MARK: - Helpers
+    func savePhotoToLibrary(_ image: UIImage) {
+        let photoLibrary = PHPhotoLibrary.shared()
+        photoLibrary.performChanges({
+            PHAssetChangeRequest.creationRequestForAsset(from: image)
+        }) { success, error in
+            if success {
+                // Set thumbnail
+                self.setPhotoThumbnail(image)
+            } else {
+                print("Error writing to photo library: ", String(describing: error))
+            }
+        }
+    }
+    
+    func setPhotoThumbnail(_ image: UIImage) {
+        DispatchQueue.main.async { () -> Void in
+            self.thumbnailButton.setBackgroundImage(image, for: .normal)
+            self.thumbnailButton.layer.borderColor = UIColor.white.cgColor
+            self.thumbnailButton.layer.borderWidth = 1.0
+        }
+    }
+}
+
+extension CameraViewController: AVCapturePhotoCaptureDelegate {
+    
+    func currentVideoOrientation() -> AVCaptureVideoOrientation {
+        var orientation: AVCaptureVideoOrientation
+        
+        switch UIDevice.current.orientation {
+        case .portrait:
+            orientation = .portrait
+        case .landscapeRight:
+            orientation = .landscapeLeft
+        case .portraitUpsideDown:
+            orientation = .portraitUpsideDown
+        case .landscapeLeft:
+            orientation = .landscapeRight
+        case .unknown, .faceUp, .faceDown:
+            orientation = .landscapeRight
+        }
+        return orientation
+    }
+    
+    // MARK: - Capture
+    func capturePhoto() {
+        
+        let connection = imageOutput.connection(with: AVMediaType.video)
+        if (connection?.isVideoOrientationSupported)! {
+            connection?.videoOrientation = currentVideoOrientation()
+        }
+        
+        let settings = AVCapturePhotoSettings()
+        
+        switch flashMode {
+        case .on: settings.flashMode = .on
+        case .off: settings.flashMode = .off
+        case .auto: settings.flashMode = .auto
+        }
+        
+        settings.isAutoStillImageStabilizationEnabled = true
+        settings.isHighResolutionPhotoEnabled = true
+        
+        imageOutput.capturePhoto(with: settings, delegate: self)
+    }
+    
+    
+    @available(iOS 11.0, *)
+    func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: Error?) {
+        
+        if let error = error {
+            print("there was an error acquiring", error)
+            return
+        }
+        
+        let image = UIImage(data: photo.fileDataRepresentation()!)
+        self.savePhotoToLibrary(image!)
+    }
+    
+}
+
+
+
+extension CameraViewController: AVCaptureFileOutputRecordingDelegate {
+    func captureMovie() {
+        if !movieOutput.isRecording {
+            guard let connection = movieOutput.connection(with: .video) else {
+                return
+            }
+            if connection.isVideoOrientationSupported {
+                connection.videoOrientation = currentVideoOrientation()
+            }
+            
+            if connection.isVideoStabilizationSupported {
+                connection.preferredVideoStabilizationMode = .auto
+            }
+            
+            let device = activeInput.device
+            if device.isSmoothAutoFocusSupported {
+                do {
+                    try device.lockForConfiguration()
+                    device.isSmoothAutoFocusEnabled = false
+                    device.unlockForConfiguration()
+                } catch {
+                    print("Error setting configuration: \(error)")
+                }
+            }
+            let outputURL = temporaryURL()
+            movieOutput.startRecording(to: outputURL, recordingDelegate: self)
+        } else {
+            stopRecording()
+        }
+    }
+    
+    func stopRecording() {
+        if movieOutput.isRecording {
+            movieOutput.stopRecording()
+        }
+    }
+    
+    func setVideoThumbnailFromURL(_ movieURL: URL) {
+        videoQueue().async {
+            let asset = AVAsset(url: movieURL)
+            let imageGenerator = AVAssetImageGenerator(asset: asset)
+            imageGenerator.appliesPreferredTrackTransform = true
+            
+            do {
+                let imageRef = try imageGenerator.copyCGImage(at: CMTime.zero,
+                                                              actualTime: nil)
+                let image = UIImage(cgImage: imageRef)
+                self.setPhotoThumbnail(image)
+            } catch {
+                print("Error generating image: \(error)")
+            }
+        }
+    }
+    
+    func saveMovieToLibrary(_ movieURL: URL) {
+        let photoLibrary = PHPhotoLibrary.shared()
+        photoLibrary.performChanges({
+            PHAssetChangeRequest.creationRequestForAssetFromVideo(atFileURL: movieURL)
+        }) { success, error in
+            if success {
+                // Set thumbnail
+                self.setVideoThumbnailFromURL(movieURL)
+            } else {
+                print("Error writing to movie library: \(error!.localizedDescription)")
+            }
+        }
+    }
+    
+    func startTimer() {
+        if updateTimer != nil {
+            updateTimer.invalidate()
+        }
+        
+        updateTimer = Timer(timeInterval: 0.5,
+                            target: self,
+                            selector: #selector(updateTimeDisplay(_:)),
+                            userInfo: nil,
+                            repeats: true)
+        
+        RunLoop.main.add(updateTimer, forMode: .common)
+    }
+    
+    func stopTimer() {
+        updateTimer?.invalidate()
+        updateTimer = nil
+    }
+    
+    @objc func updateTimeDisplay(_ sender: Timer) {
+        let time = UInt(CMTimeGetSeconds(movieOutput.recordedDuration))
+        timeLabel.text = formattedCurrentTime(time)
+    }
+    
+    func temporaryURL() -> URL {
+        let directory = URL(fileURLWithPath: NSTemporaryDirectory())
+        return directory.appendingPathComponent("temp.mov")
+    }
+    
+    func formattedCurrentTime(_ time: UInt) -> String {
+        let hours = time / 3600
+        let minutes = (time / 60) % 60
+        let seconds = time % 60
+        return String(format: "%02i:%02i:%02i", hours, minutes, seconds)
+    }
+    
+    func fileOutput(_ output: AVCaptureFileOutput, didStartRecordingTo fileURL: URL, from connections: [AVCaptureConnection]) {
+        captureButton.setImage(UIImage(named: "CaptureActivated"), for: .normal)
+        startTimer()
+    }
+    
+    func fileOutput(_ output: AVCaptureFileOutput, didFinishRecordingTo outputFileURL: URL, from connections: [AVCaptureConnection], error: Error?) {
+        
+        if let error = error {
+            print("Error recording movie:", error)
+            return
+        }
+        // Write video to library
+        saveMovieToLibrary(outputFileURL)
+        captureButton.setImage(UIImage(named: "Capture"), for: .normal)
+        stopTimer()
+    }
+    
+    func setupCaptureMode(_ mode: CaptureMode) {
+        captureMode = mode
+        if mode == .photo {
+            timeLabel.isHidden = true
+        } else {
+            timeLabel.isHidden = false
+        }
+    }
+}
+
+extension CameraViewController: UIPickerViewDelegate, UIPickerViewDataSource {
+    
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return CaptureMode.all.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
+        let titleString = CaptureMode.all[row].rawValue.capitalized
+        let title = NSAttributedString(string: titleString, attributes: [NSAttributedString.Key.foregroundColor:UIColor.white])
+        return title
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        setupCaptureMode(CaptureMode.all[row])
+    }
+}
+
+
+
+extension CameraViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func startMediaBrowserFromViewController(viewController: UIViewController, usingDelegate delegate: UINavigationControllerDelegate & UIImagePickerControllerDelegate ) -> Bool {
+        // 1
+        if UIImagePickerController.isSourceTypeAvailable(.savedPhotosAlbum) == false { return false }
+        
+        // 2
+        let mediaUI = UIImagePickerController()
+        mediaUI.sourceType = .savedPhotosAlbum
+        mediaUI.mediaTypes = [kUTTypeMovie as String]
+        mediaUI.allowsEditing = false
+        mediaUI.delegate = delegate
+        
+        // 3
+        present(mediaUI, animated: true, completion: nil)
+        return true
+    }
+    
+}
+
