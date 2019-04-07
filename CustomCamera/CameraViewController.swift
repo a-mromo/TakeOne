@@ -24,14 +24,6 @@ class CameraViewController: UIViewController {
     let locationManager = CLLocationManager()
     var currentUserLocation: CLLocation?
     
-    
-    enum CaptureMode: String {
-        case photo, video
-        static var all: [CaptureMode] = [.photo, .video]
-    }
-    
-    var captureMode = CaptureMode.video
-    
     var focusMarker: UIImageView!
     var exposureMarker: UIImageView!
     
@@ -144,12 +136,7 @@ class CameraViewController: UIViewController {
     }
     
     @IBAction func captureTapped(_ sender: Any) {
-        if captureMode == .photo {
-            capturePhoto()
-        }
-        else {
-            captureMovie()
-        }
+        captureMovie()
     }
 }
 
@@ -534,15 +521,6 @@ extension CameraViewController: AVCaptureFileOutputRecordingDelegate {
         saveMovieToLibrary(outputFileURL)
         captureButton.setImage(UIImage(named: "Capture"), for: .normal)
         stopTimer()
-    }
-    
-    func setupCaptureMode(_ mode: CaptureMode) {
-        captureMode = mode
-        if mode == .photo {
-            timeLabel.isHidden = true
-        } else {
-            timeLabel.isHidden = false
-        }
     }
 }
 
