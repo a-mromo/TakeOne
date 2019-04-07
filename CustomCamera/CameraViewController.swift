@@ -93,11 +93,11 @@ class CameraViewController: UIViewController {
         
         tapForFocus.require(toFail: tapForExposure)
         
-        focusMarker = UIImageView(image: UIImage(named:"Focus"))
+        focusMarker = UIImageView(image: UIImage(named:"Focus_Point"))
         focusMarker.isHidden = true
         cameraPreview.addSubview(focusMarker)
         
-        exposureMarker = UIImageView(image: UIImage(named:"Exposure"))
+        exposureMarker = UIImageView(image: UIImage(named:"Exposure_Point"))
         exposureMarker.isHidden = true
         cameraPreview.addSubview(exposureMarker)
     }
@@ -367,22 +367,6 @@ extension CameraViewController: AVCapturePhotoCaptureDelegate {
             orientation = .landscapeRight
         }
         return orientation
-    }
-    
-    // MARK: - Capture
-    func capturePhoto() {
-        
-        let connection = imageOutput.connection(with: AVMediaType.video)
-        if (connection?.isVideoOrientationSupported)! {
-            connection?.videoOrientation = currentVideoOrientation()
-        }
-        
-        let settings = AVCapturePhotoSettings()
-        
-        settings.isAutoStillImageStabilizationEnabled = true
-        settings.isHighResolutionPhotoEnabled = true
-        
-        imageOutput.capturePhoto(with: settings, delegate: self)
     }
     
     
