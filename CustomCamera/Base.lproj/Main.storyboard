@@ -31,7 +31,7 @@
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kim-s5-0rD" userLabel="Camera">
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kim-s5-0rD" userLabel="Camera">
                                         <rect key="frame" x="290" y="10" width="30" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="30" id="KKd-Gs-q0I"/>
@@ -42,24 +42,10 @@
                                             <action selector="cameraToggleTapped:" destination="rQ0-1Y-YYP" eventType="touchUpInside" id="if9-5G-lSx"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rAM-25-dQX" userLabel="Clear">
-                                        <rect key="frame" x="336" y="9" width="35" height="32"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="32" id="B5w-08-PN3"/>
-                                            <constraint firstAttribute="width" constant="35" id="lQA-Fl-ZVk"/>
-                                        </constraints>
-                                        <state key="normal" image="clear"/>
-                                        <connections>
-                                            <action selector="clearTapped:" destination="rQ0-1Y-YYP" eventType="touchUpInside" id="0Gx-Y8-IIm"/>
-                                        </connections>
-                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.32065331380000001" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstItem="rAM-25-dQX" firstAttribute="leading" secondItem="kim-s5-0rD" secondAttribute="trailing" constant="16" id="4IQ-CY-eYH"/>
                                     <constraint firstAttribute="height" constant="50" id="FN1-46-LSW"/>
-                                    <constraint firstAttribute="trailing" secondItem="rAM-25-dQX" secondAttribute="trailing" constant="4" id="L9i-aI-E6b"/>
-                                    <constraint firstItem="rAM-25-dQX" firstAttribute="centerY" secondItem="aFI-dN-1yn" secondAttribute="centerY" id="M5t-Ef-pcN"/>
                                     <constraint firstItem="kim-s5-0rD" firstAttribute="centerY" secondItem="aFI-dN-1yn" secondAttribute="centerY" id="Qh9-fp-xYg"/>
                                     <constraint firstItem="kim-s5-0rD" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="CZ1-gG-U29" secondAttribute="trailing" constant="20" id="p05-eM-dFy"/>
                                     <constraint firstItem="CZ1-gG-U29" firstAttribute="centerX" secondItem="aFI-dN-1yn" secondAttribute="centerX" id="wSo-hV-b2R"/>
@@ -91,17 +77,6 @@
                                             <action selector="thumbnailTapped:" destination="rQ0-1Y-YYP" eventType="touchUpInside" id="BcZ-Za-d5y"/>
                                         </connections>
                                     </button>
-                                    <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ycB-Q3-bBy">
-                                        <rect key="frame" x="263" y="6" width="94" height="88"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="88" id="DUi-LW-YLH"/>
-                                            <constraint firstAttribute="width" constant="94" id="I7P-C1-Fl0"/>
-                                        </constraints>
-                                        <connections>
-                                            <outlet property="dataSource" destination="rQ0-1Y-YYP" id="baD-Xk-qGm"/>
-                                            <outlet property="delegate" destination="rQ0-1Y-YYP" id="qyB-8u-34G"/>
-                                        </connections>
-                                    </pickerView>
                                 </subviews>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.32065331380000001" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -110,8 +85,6 @@
                                     <constraint firstItem="gyn-ZQ-iLV" firstAttribute="centerY" secondItem="ojB-FT-8wW" secondAttribute="centerY" id="A9J-bR-OTr"/>
                                     <constraint firstAttribute="height" constant="100" id="Cfl-eT-UkS"/>
                                     <constraint firstItem="gyn-ZQ-iLV" firstAttribute="leading" secondItem="ojB-FT-8wW" secondAttribute="leading" constant="20" id="LSP-7N-FC4"/>
-                                    <constraint firstAttribute="trailing" secondItem="ycB-Q3-bBy" secondAttribute="trailing" constant="18" id="bpd-44-7kI"/>
-                                    <constraint firstItem="ycB-Q3-bBy" firstAttribute="centerY" secondItem="ojB-FT-8wW" secondAttribute="centerY" id="dQb-BA-Mpy"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -133,7 +106,6 @@
                     <connections>
                         <outlet property="cameraPreview" destination="tfk-RE-PY5" id="g6F-A8-2p0"/>
                         <outlet property="captureButton" destination="Z2T-Td-ZSe" id="ORh-9I-0iE"/>
-                        <outlet property="modePicker" destination="ycB-Q3-bBy" id="bDr-eL-KGH"/>
                         <outlet property="thumbnailButton" destination="gyn-ZQ-iLV" id="LIa-1O-5zz"/>
                         <outlet property="timeLabel" destination="CZ1-gG-U29" id="KJG-n6-4aH"/>
                     </connections>
@@ -146,6 +118,5 @@
     <resources>
         <image name="Camera" width="16" height="16"/>
         <image name="Capture" width="64" height="64"/>
-        <image name="clear" width="14" height="14"/>
     </resources>
 </document>

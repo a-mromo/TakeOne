@@ -30,7 +30,7 @@ class CameraViewController: UIViewController {
         static var all: [CaptureMode] = [.photo, .video]
     }
     
-    var captureMode = CaptureMode.photo
+    var captureMode = CaptureMode.video
     
     var focusMarker: UIImageView!
     var exposureMarker: UIImageView!
@@ -39,7 +39,6 @@ class CameraViewController: UIViewController {
     @IBOutlet weak var thumbnailButton: UIButton!
     @IBOutlet weak var cameraPreview: UIView!
     @IBOutlet weak var captureButton: UIButton!
-    @IBOutlet weak var modePicker: UIPickerView!
     @IBOutlet weak var timeLabel: UILabel!
     
     fileprivate var adjustingExposureContext: String = ""
@@ -139,13 +138,6 @@ class CameraViewController: UIViewController {
     
     override var prefersStatusBarHidden: Bool {
         return true
-    }
-    
-    
-    
-    @IBAction func clearTapped(_ sender: Any) {
-        dismiss(animated: true, completion: nil)
-        stopSession()
     }
     
     
@@ -557,27 +549,6 @@ extension CameraViewController: AVCaptureFileOutputRecordingDelegate {
         } else {
             timeLabel.isHidden = false
         }
-    }
-}
-
-extension CameraViewController: UIPickerViewDelegate, UIPickerViewDataSource {
-    
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 1
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return CaptureMode.all.count
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
-        let titleString = CaptureMode.all[row].rawValue.capitalized
-        let title = NSAttributedString(string: titleString, attributes: [NSAttributedString.Key.foregroundColor:UIColor.white])
-        return title
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        setupCaptureMode(CaptureMode.all[row])
     }
 }
 
