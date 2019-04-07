@@ -44,9 +44,6 @@ class CameraViewController: UIViewController {
     fileprivate var adjustingExposureContext: String = ""
     fileprivate var updateTimer: Timer!
     
-    var flashIsActive = false
-    
-    
     func setupSessionAndPreview() {
         captureSession.sessionPreset = .high
         let camera = AVCaptureDevice.default(for: .video)
@@ -117,9 +114,6 @@ class CameraViewController: UIViewController {
         super.viewDidLoad()
         setupSessionAndPreview()
         startSession()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
     }
     
     override func viewDidLayoutSubviews() {
