@@ -21,14 +21,13 @@ class CameraViewController: UIViewController {
     let imageOutput = AVCapturePhotoOutput()
     let movieOutput = AVCaptureMovieFileOutput()
     
-    let dataSourceTest = [1,2,3,4,5]
-    
     let locationManager = CLLocationManager()
     var currentUserLocation: CLLocation?
     
     var focusMarker: UIImageView!
     var exposureMarker: UIImageView!
     
+    var colorPalette = [ColorSwatch]()
     
     @IBOutlet weak var thumbnailButton: UIButton!
     @IBOutlet weak var cameraPreview: UIView!
@@ -114,6 +113,7 @@ class CameraViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        parseColorPalette()
         setupCollectionView()
         setupSessionAndPreview()
         startSession()
@@ -519,7 +519,30 @@ extension CameraViewController: AVCaptureFileOutputRecordingDelegate {
     }
 }
 
+// MARK: Networking
 
+extension CameraViewController {
+    
+    func parseJSONFile(forResource resource: String)  {
+        if let path = Bundle.main.path(forResource: resource, ofType: "json") {
+            do {
+                let data = try Data(contentsOf: URL(fileURLWithPath: path), options: .mappedIfSafe)
+                let decoder = JSONDecoder()
+                colorPalette = try decoder.decode([ColorSwatch].self, from: data)
+                print(colorPalette)
+                
+            } catch let error {
+                print("Error: ", error)
+            }
+        }
+    }
+    
+    func parseColorPalette() {
+        parseJSONFile(forResource: "ColorData")
+        collectionView.reloadData()
+    }
+    
+}
 
 extension CameraViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func startMediaBrowserFromViewController(viewController: UIViewController, usingDelegate delegate: UINavigationControllerDelegate & UIImagePickerControllerDelegate ) -> Bool {
@@ -543,7 +566,7 @@ extension CameraViewController: UIImagePickerControllerDelegate, UINavigationCon
 extension CameraViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return dataSourceTest.count
+        return colorPalette.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -551,8 +574,6 @@ extension CameraViewController: UICollectionViewDelegate, UICollectionViewDataSo
         
         return cell
     }
-    
-    
     
 }
 

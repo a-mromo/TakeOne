@@ -8,18 +8,19 @@
 
 import UIKit
 
-struct ColorSwatch {
+struct ColorSwatch: Codable {
     var name: String
-    var color: UIColor
+    private var colorHexValue: String
     
-    init(name: String, hexColor: String) {
-        self.name = name
-        self.color = UIColor(hex: hexColor) ?? UIColor.black
+    var color: UIColor? {
+        return UIColor(hex: self.colorHexValue)
     }
     
-    
-    private struct JSONKeys {
-        static let name = "Name"
-        static let hexColor = "HexValue"
+}
+
+extension ColorSwatch {
+    private enum CodingKeys: String, CodingKey {
+        case name = "Name"
+        case colorHexValue = "HexValue"
     }
 }
