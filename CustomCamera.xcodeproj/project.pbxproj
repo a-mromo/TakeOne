@@ -110,7 +110,7 @@
 				5D1732F82256FDA600E140E4 /* Assets.xcassets */,
 				5D1732FA2256FDA600E140E4 /* LaunchScreen.storyboard */,
 				5D1732FD2256FDA600E140E4 /* Info.plist */,
-				5D652A87225BD7470069017A /* UIColor+Extension.swift */,
+				5D652A8D225BE82E0069017A /* Extension */,
 				5D652A8B225BE38E0069017A /* Model */,
 			);
 			path = CustomCamera;
@@ -148,6 +148,14 @@
 			children = (
 			);
 			path = Stub;
+			sourceTree = "<group>";
+		};
+		5D652A8D225BE82E0069017A /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				5D652A87225BD7470069017A /* UIColor+Extension.swift */,
+			);
+			path = Extension;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
