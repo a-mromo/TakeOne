@@ -15,6 +15,8 @@
 		5D1733072256FDA600E140E4 /* CustomCameraTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1733062256FDA600E140E4 /* CustomCameraTests.swift */; };
 		5D1733122256FDA600E140E4 /* CustomCameraUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1733112256FDA600E140E4 /* CustomCameraUITests.swift */; };
 		5D652A86225BB0950069017A /* ColorSwatchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D652A85225BB0950069017A /* ColorSwatchCell.swift */; };
+		5D652A88225BD7470069017A /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D652A87225BD7470069017A /* UIColor+Extension.swift */; };
+		5D652A8A225BD9970069017A /* ColorSwatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D652A89225BD9970069017A /* ColorSwatch.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +51,8 @@
 		5D1733112256FDA600E140E4 /* CustomCameraUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCameraUITests.swift; sourceTree = "<group>"; };
 		5D1733132256FDA600E140E4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5D652A85225BB0950069017A /* ColorSwatchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorSwatchCell.swift; sourceTree = "<group>"; };
+		5D652A87225BD7470069017A /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
+		5D652A89225BD9970069017A /* ColorSwatch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorSwatch.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +110,8 @@
 				5D1732F82256FDA600E140E4 /* Assets.xcassets */,
 				5D1732FA2256FDA600E140E4 /* LaunchScreen.storyboard */,
 				5D1732FD2256FDA600E140E4 /* Info.plist */,
+				5D652A87225BD7470069017A /* UIColor+Extension.swift */,
+				5D652A8B225BE38E0069017A /* Model */,
 			);
 			path = CustomCamera;
 			sourceTree = "<group>";
@@ -126,6 +132,22 @@
 				5D1733132256FDA600E140E4 /* Info.plist */,
 			);
 			path = CustomCameraUITests;
+			sourceTree = "<group>";
+		};
+		5D652A8B225BE38E0069017A /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				5D652A8C225BE3AB0069017A /* Stub */,
+				5D652A89225BD9970069017A /* ColorSwatch.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		5D652A8C225BE3AB0069017A /* Stub */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Stub;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -259,9 +281,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5D652A8A225BD9970069017A /* ColorSwatch.swift in Sources */,
 				5D1732F42256FDA400E140E4 /* CameraViewController.swift in Sources */,
 				5D1732F22256FDA400E140E4 /* AppDelegate.swift in Sources */,
 				5D652A86225BB0950069017A /* ColorSwatchCell.swift in Sources */,
+				5D652A88225BD7470069017A /* UIColor+Extension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
