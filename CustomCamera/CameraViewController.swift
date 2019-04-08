@@ -21,6 +21,8 @@ class CameraViewController: UIViewController {
     let imageOutput = AVCapturePhotoOutput()
     let movieOutput = AVCaptureMovieFileOutput()
     
+    let dataSourceTest = [1,2,3,4,5]
+    
     let locationManager = CLLocationManager()
     var currentUserLocation: CLLocation?
     
@@ -32,6 +34,8 @@ class CameraViewController: UIViewController {
     @IBOutlet weak var cameraPreview: UIView!
     @IBOutlet weak var captureButton: UIButton!
     @IBOutlet weak var timeLabel: UILabel!
+    @IBOutlet weak var collectionView: UICollectionView!
+    
     
     fileprivate var adjustingExposureContext: String = ""
     fileprivate var updateTimer: Timer!
@@ -102,8 +106,15 @@ class CameraViewController: UIViewController {
         cameraPreview.addSubview(exposureMarker)
     }
     
+    func setupCollectionView(){
+        collectionView.delegate = self
+        collectionView.dataSource = self
+    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupCollectionView()
         setupSessionAndPreview()
         startSession()
     }
@@ -526,6 +537,22 @@ extension CameraViewController: UIImagePickerControllerDelegate, UINavigationCon
         present(mediaUI, animated: true, completion: nil)
         return true
     }
+    
+}
+
+extension CameraViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return dataSourceTest.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ColorSwatchCell.identifier, for: indexPath) as? ColorSwatchCell else { return UICollectionViewCell() }
+        
+        return cell
+    }
+    
+    
     
 }
 

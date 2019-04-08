@@ -14,6 +14,7 @@
 		5D1732FC2256FDA600E140E4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D1732FA2256FDA600E140E4 /* LaunchScreen.storyboard */; };
 		5D1733072256FDA600E140E4 /* CustomCameraTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1733062256FDA600E140E4 /* CustomCameraTests.swift */; };
 		5D1733122256FDA600E140E4 /* CustomCameraUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1733112256FDA600E140E4 /* CustomCameraUITests.swift */; };
+		5D652A86225BB0950069017A /* ColorSwatchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D652A85225BB0950069017A /* ColorSwatchCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +48,7 @@
 		5D17330D2256FDA600E140E4 /* CustomCameraUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CustomCameraUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D1733112256FDA600E140E4 /* CustomCameraUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCameraUITests.swift; sourceTree = "<group>"; };
 		5D1733132256FDA600E140E4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5D652A85225BB0950069017A /* ColorSwatchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorSwatchCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +100,7 @@
 			isa = PBXGroup;
 			children = (
 				5D1732F12256FDA400E140E4 /* AppDelegate.swift */,
+				5D652A85225BB0950069017A /* ColorSwatchCell.swift */,
 				5D1732F32256FDA400E140E4 /* CameraViewController.swift */,
 				5D1732F52256FDA400E140E4 /* Main.storyboard */,
 				5D1732F82256FDA600E140E4 /* Assets.xcassets */,
@@ -258,6 +261,7 @@
 			files = (
 				5D1732F42256FDA400E140E4 /* CameraViewController.swift in Sources */,
 				5D1732F22256FDA400E140E4 /* AppDelegate.swift in Sources */,
+				5D652A86225BB0950069017A /* ColorSwatchCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
