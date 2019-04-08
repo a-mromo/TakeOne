@@ -1,0 +1,33 @@
+[ {
+    "Name": "navyBlue",
+    "HexValue": "#081EFC"
+},
+{
+    "Name": "white",
+    "HexValue": "#F6F7F8"
+},
+{
+    "Name": "darkBlue",
+    "HexValue": "#1533BC"
+},
+{
+    "Name": "orange",
+    "HexValue": "#F95A0C"
+},
+{
+    "Name": "gray",
+    "HexValue": "#A4ACCE"
+},
+{
+    "Name": "blue3",
+    "HexValue": "#101451"
+},
+{
+    "Name": "paleTeal",
+    "HexValue": "#70AB73"
+},
+{
+    "Name": "red",
+    "HexValue": "#D92303"
+}
+]

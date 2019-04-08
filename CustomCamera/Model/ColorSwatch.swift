@@ -20,6 +20,6 @@ struct ColorSwatch {
     
     private struct JSONKeys {
         static let name = "Name"
-        static let hexColor = "HexColor"
+        static let hexColor = "HexValue"
     }
 }
