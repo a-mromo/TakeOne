@@ -106,7 +106,7 @@
 			isa = PBXGroup;
 			children = (
 				5D1732F12256FDA400E140E4 /* AppDelegate.swift */,
-				5D652A85225BB0950069017A /* ColorSwatchCell.swift */,
+				5D652A91225BFC4C0069017A /* Views */,
 				5D1732F32256FDA400E140E4 /* CameraViewController.swift */,
 				5D1732F52256FDA400E140E4 /* Main.storyboard */,
 				5D1732F82256FDA600E140E4 /* Assets.xcassets */,
@@ -167,6 +167,14 @@
 			children = (
 			);
 			path = Helpers;
+			sourceTree = "<group>";
+		};
+		5D652A91225BFC4C0069017A /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				5D652A85225BB0950069017A /* ColorSwatchCell.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

@@ -1,33 +1,37 @@
 [ {
-    "Name": "navyBlue",
-    "HexValue": "#081EFC"
+    "Name": "sourLemon",
+    "HexValue": "#ffeaa7"
 },
 {
-    "Name": "white",
-    "HexValue": "#F6F7F8"
+    "Name": "lightGreenishBlue",
+    "HexValue": "#55efc4ff"
 },
 {
-    "Name": "darkBlue",
-    "HexValue": "#1533BC"
+    "Name": "robinsEggBlue",
+    "HexValue": "#00cec9ff"
 },
 {
-    "Name": "orange",
-    "HexValue": "#F95A0C"
+    "Name": "pinkGlamour",
+    "HexValue": "#ff7675ff"
 },
 {
-    "Name": "gray",
-    "HexValue": "#A4ACCE"
+    "Name": "prunusAvium",
+    "HexValue": "#e84393ff"
 },
 {
-    "Name": "blue3",
-    "HexValue": "#101451"
+    "Name": "cityLights",
+    "HexValue": "#dfe6e9ff"
 },
 {
-    "Name": "paleTeal",
-    "HexValue": "#70AB73"
+    "Name": "soothingLights",
+    "HexValue": "#b2bec3ff"
 },
 {
-    "Name": "red",
-    "HexValue": "#D92303"
+    "Name": "americanRiver",
+    "HexValue": "#636e72ff"
+},
+{
+    "Name": "draculaOrchid",
+    "HexValue": "#2d3436ff"
 }
 ]

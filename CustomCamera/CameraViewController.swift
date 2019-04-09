@@ -571,7 +571,7 @@ extension CameraViewController: UICollectionViewDelegate, UICollectionViewDataSo
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ColorSwatchCell.identifier, for: indexPath) as? ColorSwatchCell else { return UICollectionViewCell() }
-        
+            cell.configure(from: colorPalette[indexPath.row], indexPath: indexPath)
         return cell
     }
     

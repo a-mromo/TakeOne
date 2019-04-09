@@ -11,5 +11,14 @@ import UIKit
 class ColorSwatchCell: UICollectionViewCell {
     
     static let identifier = "ColorSwatchCell"
+    private var indexPath: IndexPath!
+    
+    @IBOutlet weak var colorView: UIView!
+    
+    func configure(from colorSwatch: ColorSwatch, indexPath: IndexPath) {
+        self.indexPath = indexPath
+        self.colorView.backgroundColor = colorSwatch.color
+    }
+    
     
 }

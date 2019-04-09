@@ -120,6 +120,9 @@
                                             <constraint firstAttribute="trailing" secondItem="n13-uv-bTU" secondAttribute="trailing" constant="4" id="zxh-5o-YHd"/>
                                         </constraints>
                                         <size key="customSize" width="50" height="50"/>
+                                        <connections>
+                                            <outlet property="colorView" destination="n13-uv-bTU" id="b4e-0Z-iiE"/>
+                                        </connections>
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
