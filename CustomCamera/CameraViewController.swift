@@ -577,3 +577,10 @@ extension CameraViewController: UICollectionViewDelegate, UICollectionViewDataSo
     
 }
 
+extension CameraViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: 50, height: 50)
+    }
+}
