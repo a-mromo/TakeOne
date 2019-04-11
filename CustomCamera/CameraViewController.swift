@@ -39,6 +39,8 @@ class CameraViewController: UIViewController {
     fileprivate var adjustingExposureContext: String = ""
     fileprivate var updateTimer: Timer!
     
+    private let dataManager = DataManager(baseURL: API.authenticatedBaseURL)
+    
     func setupSessionAndPreview() {
         captureSession.sessionPreset = .high
         let camera = AVCaptureDevice.default(for: .video)
@@ -117,6 +119,7 @@ class CameraViewController: UIViewController {
         setupCollectionView()
         setupSessionAndPreview()
         startSession()
+        getWeatherData()
     }
     
     override func viewDidLayoutSubviews() {
@@ -521,7 +524,15 @@ extension CameraViewController: AVCaptureFileOutputRecordingDelegate {
 
 // MARK: Networking
 
+
+
 extension CameraViewController {
+    
+    func getWeatherData() {
+        dataManager.weatherDataForLocation(latitude: Defaults.latitude, longitude: Defaults.longitude) { (response, error)  in
+            print("Weather Data:\n", response)
+        }
+    }
     
     func parseJSONFile(forResource resource: String)  {
         if let path = Bundle.main.path(forResource: resource, ofType: "json") {
