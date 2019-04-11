@@ -17,7 +17,7 @@ enum DataManagerError: Error {
 
 final class DataManager {
     
-    typealias WeatherDataCompletion = (AnyObject?, DataManagerError?) -> ()
+    typealias WeatherDataCompletion = (WeatherData?, DataManagerError?) -> ()
     
     let baseURL: URL
     
@@ -30,7 +30,9 @@ final class DataManager {
         let URL = baseURL.appendingPathComponent("\(latitude), \(longitude)")
         
         URLSession.shared.dataTask(with: URL) { (data, response, error) in
-            self.didFetchWeatherData(data: data, response: response, error: error, completion: completion)
+            DispatchQueue.main.async {
+                self.didFetchWeatherData(data: data, response: response, error: error, completion: completion)
+            }
         }.resume()
     }
     
@@ -40,7 +42,7 @@ final class DataManager {
             
         } else if let data = data, let response = response as? HTTPURLResponse {
             if response.statusCode == 200 {
-                processWeatherData(data: data, completion: completion)
+                parseWeatherData(data: data, completion: completion)
             } else {
                 completion(nil, .FailedRequest)
             }
@@ -49,10 +51,13 @@ final class DataManager {
         }
     }
     
-    func processWeatherData(data: Data, completion: WeatherDataCompletion) {
-        if let JSON = try? JSONSerialization.jsonObject(with: data, options: []) as AnyObject {
-            completion(JSON, nil)
-        } else {
+    func parseWeatherData(data: Data, completion: WeatherDataCompletion) {
+        
+        do {
+            let decoder = JSONDecoder()
+            let weatherData = try decoder.decode(WeatherData.self, from: data)
+            completion(weatherData, nil)
+        } catch _ {
             completion(nil, .InvalidResponse)
         }
     }

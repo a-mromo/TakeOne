@@ -28,6 +28,7 @@ class CameraViewController: UIViewController {
     var exposureMarker: UIImageView!
     
     var colorPalette = [ColorSwatch]()
+    var weatherData: WeatherData?
     
     @IBOutlet weak var thumbnailButton: UIButton!
     @IBOutlet weak var cameraPreview: UIView!
@@ -524,13 +525,17 @@ extension CameraViewController: AVCaptureFileOutputRecordingDelegate {
 
 // MARK: Networking
 
-
-
 extension CameraViewController {
     
     func getWeatherData() {
         dataManager.weatherDataForLocation(latitude: Defaults.latitude, longitude: Defaults.longitude) { (response, error)  in
-            print("Weather Data:\n", response)
+            if let error = error {
+                print("Failed to get data from url", error)
+                return
+            }
+            
+            guard let response = response else { return }
+            self.weatherData = response
         }
     }
     
