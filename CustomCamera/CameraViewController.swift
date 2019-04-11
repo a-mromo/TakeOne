@@ -116,7 +116,7 @@ class CameraViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        parseColorPalette()
+        getColorPalette()
         setupCollectionView()
         setupSessionAndPreview()
         startSession()
@@ -545,15 +545,13 @@ extension CameraViewController {
                 let data = try Data(contentsOf: URL(fileURLWithPath: path), options: .mappedIfSafe)
                 let decoder = JSONDecoder()
                 colorPalette = try decoder.decode([ColorSwatch].self, from: data)
-                print(colorPalette)
-                
             } catch let error {
                 print("Error: ", error)
             }
         }
     }
     
-    func parseColorPalette() {
+    func getColorPalette() {
         parseJSONFile(forResource: "ColorData")
         collectionView.reloadData()
     }
