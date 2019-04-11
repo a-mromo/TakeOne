@@ -32,10 +32,10 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kim-s5-0rD" userLabel="Camera">
-                                        <rect key="frame" x="290" y="10" width="30" height="30"/>
+                                        <rect key="frame" x="272" y="1" width="48" height="48"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="30" id="KKd-Gs-q0I"/>
-                                            <constraint firstAttribute="height" constant="30" id="WVN-Gn-M7z"/>
+                                            <constraint firstAttribute="width" secondItem="kim-s5-0rD" secondAttribute="height" multiplier="1:1" id="75g-GK-xpa"/>
+                                            <constraint firstAttribute="height" constant="48" id="WVN-Gn-M7z"/>
                                         </constraints>
                                         <state key="normal" image="Camera_Icon"/>
                                         <connections>
