@@ -502,7 +502,7 @@ extension CameraViewController: AVCaptureFileOutputRecordingDelegate {
     }
     
     func fileOutput(_ output: AVCaptureFileOutput, didStartRecordingTo fileURL: URL, from connections: [AVCaptureConnection]) {
-        captureButton.setImage(UIImage(named: "CaptureActivated"), for: .normal)
+        captureButton.setImage(UIImage(named: "Capture-Active"), for: .normal)
         startTimer()
     }
     
@@ -514,7 +514,7 @@ extension CameraViewController: AVCaptureFileOutputRecordingDelegate {
         }
         // Write video to library
         saveMovieToLibrary(outputFileURL)
-        captureButton.setImage(UIImage(named: "Capture"), for: .normal)
+        captureButton.setImage(UIImage(named: "Capture-Inactive"), for: .normal)
         stopTimer()
     }
 }

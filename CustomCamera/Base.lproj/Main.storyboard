@@ -37,7 +37,7 @@
                                             <constraint firstAttribute="width" secondItem="kim-s5-0rD" secondAttribute="height" multiplier="1:1" id="75g-GK-xpa"/>
                                             <constraint firstAttribute="height" constant="48" id="WVN-Gn-M7z"/>
                                         </constraints>
-                                        <state key="normal" image="Camera_Icon"/>
+                                        <state key="normal" image="CameraSwitch-Inactive"/>
                                         <connections>
                                             <action selector="cameraToggleTapped:" destination="rQ0-1Y-YYP" eventType="touchUpInside" id="if9-5G-lSx"/>
                                         </connections>
@@ -64,7 +64,7 @@
                                                     <constraint firstAttribute="width" constant="80" id="AJh-NP-8ZL"/>
                                                     <constraint firstAttribute="height" constant="80" id="THK-io-DBg"/>
                                                 </constraints>
-                                                <state key="normal" image="Capture"/>
+                                                <state key="normal" image="Capture-Inactive"/>
                                                 <connections>
                                                     <action selector="captureTapped:" destination="rQ0-1Y-YYP" eventType="touchUpInside" id="EPs-d0-PLg"/>
                                                 </connections>
@@ -176,7 +176,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Camera_Icon" width="28" height="21"/>
-        <image name="Capture" width="64" height="64"/>
+        <image name="CameraSwitch-Inactive" width="48" height="48"/>
+        <image name="Capture-Inactive" width="64" height="64"/>
     </resources>
 </document>
