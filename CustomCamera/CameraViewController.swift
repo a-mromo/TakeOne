@@ -34,6 +34,7 @@ class CameraViewController: UIViewController {
     @IBOutlet weak var cameraPreview: UIView!
     @IBOutlet weak var captureButton: UIButton!
     @IBOutlet weak var timeLabel: UILabel!
+    @IBOutlet weak var temperatureLabel: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
     
     
@@ -340,7 +341,6 @@ extension CameraViewController {
 
 extension CameraViewController {
     // MARK: - Saving photo to photo album
-    // MARK: - Helpers
     func savePhotoToLibrary(_ image: UIImage) {
         let photoLibrary = PHPhotoLibrary.shared()
         photoLibrary.performChanges({
@@ -536,6 +536,7 @@ extension CameraViewController {
             
             guard let response = response else { return }
             self.weatherData = response
+            self.updateWeatherLabel(temperature: self.weatherData?.hourData.data.first?.temperature ?? 0)
         }
     }
     
@@ -554,6 +555,10 @@ extension CameraViewController {
     func getColorPalette() {
         parseJSONFile(forResource: "ColorData")
         collectionView.reloadData()
+    }
+    
+    func updateWeatherLabel(temperature: Double) {
+        self.temperatureLabel.text = "\(Int(round(temperature)))°F"
     }
     
 }
@@ -587,6 +592,12 @@ extension CameraViewController: UICollectionViewDelegate, UICollectionViewDataSo
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ColorSwatchCell.identifier, for: indexPath) as? ColorSwatchCell else { return UICollectionViewCell() }
             cell.configure(from: colorPalette[indexPath.row], indexPath: indexPath)
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if collectionView == self.collectionView {
+            temperatureLabel.textColor = colorPalette[indexPath.row].color
+        }
     }
     
 }

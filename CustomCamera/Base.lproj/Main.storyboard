@@ -22,6 +22,12 @@
                                 <rect key="frame" x="0.0" y="10" width="375" height="667"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="40°F" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kk1-Jg-jzQ">
+                                <rect key="frame" x="292.5" y="420" width="58.5" height="38"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBold" family="Helvetica Neue" pointSize="32"/>
+                                <color key="textColor" red="0.3411764706" green="0.35686274509999999" blue="0.36862745099999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aFI-dN-1yn" userLabel="TopControls">
                                 <rect key="frame" x="0.0" y="20" width="375" height="50"/>
                                 <subviews>
@@ -152,12 +158,14 @@
                             <constraint firstItem="xBO-uG-Fwk" firstAttribute="leading" secondItem="kTU-Uq-bDP" secondAttribute="leading" id="4cQ-Dc-6dJ"/>
                             <constraint firstItem="tfk-RE-PY5" firstAttribute="centerY" secondItem="kTU-Uq-bDP" secondAttribute="centerY" id="EGi-gZ-gQd"/>
                             <constraint firstItem="aFI-dN-1yn" firstAttribute="top" secondItem="kTU-Uq-bDP" secondAttribute="top" id="JOe-tP-KxR"/>
+                            <constraint firstItem="kTU-Uq-bDP" firstAttribute="bottom" secondItem="Kk1-Jg-jzQ" secondAttribute="bottom" constant="209" id="JPQ-dE-37x"/>
                             <constraint firstItem="aFI-dN-1yn" firstAttribute="leading" secondItem="kTU-Uq-bDP" secondAttribute="leading" id="JfH-f5-oFW"/>
                             <constraint firstItem="kTU-Uq-bDP" firstAttribute="trailing" secondItem="xBO-uG-Fwk" secondAttribute="trailing" id="Pfh-ko-iq9"/>
                             <constraint firstItem="kTU-Uq-bDP" firstAttribute="trailing" secondItem="aFI-dN-1yn" secondAttribute="trailing" id="Ptw-TP-k5G"/>
                             <constraint firstItem="tfk-RE-PY5" firstAttribute="height" secondItem="7yT-gL-mbm" secondAttribute="height" id="TU9-Un-ytE"/>
                             <constraint firstItem="tfk-RE-PY5" firstAttribute="centerX" secondItem="kTU-Uq-bDP" secondAttribute="centerX" id="Zbl-gv-Wbo"/>
                             <constraint firstItem="kTU-Uq-bDP" firstAttribute="bottom" secondItem="xBO-uG-Fwk" secondAttribute="bottom" id="qT2-ij-AWl"/>
+                            <constraint firstItem="kTU-Uq-bDP" firstAttribute="trailing" secondItem="Kk1-Jg-jzQ" secondAttribute="trailing" constant="24" id="xRh-1O-pg1"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="kTU-Uq-bDP"/>
                     </view>
@@ -165,6 +173,7 @@
                         <outlet property="cameraPreview" destination="tfk-RE-PY5" id="g6F-A8-2p0"/>
                         <outlet property="captureButton" destination="Z2T-Td-ZSe" id="ORh-9I-0iE"/>
                         <outlet property="collectionView" destination="Nax-Bs-bFs" id="gns-B5-0dh"/>
+                        <outlet property="temperatureLabel" destination="Kk1-Jg-jzQ" id="5bL-r5-R0v"/>
                         <outlet property="thumbnailButton" destination="gyn-ZQ-iLV" id="LIa-1O-5zz"/>
                         <outlet property="timeLabel" destination="CZ1-gG-U29" id="KJG-n6-4aH"/>
                     </connections>
