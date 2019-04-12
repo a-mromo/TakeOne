@@ -116,14 +116,17 @@ extension CameraViewController {
                 PHAssetChangeRequest.creationRequestForAssetFromVideo(atFileURL: outputURL!)
             }) { saved, error in
                 if saved {
+                    // Needs refactor: setVideoThumbnail...
+                    
                     let fetchOptions = PHFetchOptions()
                     fetchOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: true)]
                     let fetchResult = PHAsset.fetchAssets(with: .video, options: fetchOptions).lastObject
                     PHImageManager().requestAVAsset(forVideo: fetchResult!, options: nil, resultHandler: { (avurlAsset, audioMix, dict) in
                         let newObj = avurlAsset as! AVURLAsset
-                        print(newObj.url)
+//                        print(newObj.url)
                         DispatchQueue.main.async(execute: {
-                            print(newObj.url.absoluteString)
+//                            print(newObj.url.absoluteString)
+                            self.setVideoThumbnailFromURL(newObj.url)
                         })
                     })
                     print (fetchResult!)

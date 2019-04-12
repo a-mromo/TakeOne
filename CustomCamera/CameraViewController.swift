@@ -131,7 +131,11 @@ class CameraViewController: UIViewController {
         setupSessionAndPreview()
         startSession()
 //        getWeatherData()
+        setThumbnailPicture()
         pinBackground(bottomControlsBackgroundView, to: botomControlsStackView)
+        thumbnailButton.layer.cornerRadius = thumbnailButton.frame.width / 2
+        thumbnailButton.imageView?.layer.cornerRadius = thumbnailButton.frame.width / 2
+        thumbnailButton.clipsToBounds = true
     }
     
     override func viewDidLayoutSubviews() {
@@ -178,6 +182,18 @@ extension CameraViewController {
         view.translatesAutoresizingMaskIntoConstraints = false
         stackView.insertSubview(view, at: 0)
         view.pin(to: stackView)
+    }
+    
+    private func setThumbnailPicture() {
+        let fetchOptions = PHFetchOptions()
+        fetchOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: true)]
+        let fetchResult = PHAsset.fetchAssets(with: .video, options: fetchOptions).lastObject
+        PHImageManager().requestAVAsset(forVideo: fetchResult!, options: nil, resultHandler: { (avurlAsset, audioMix, dict) in
+            let newObj = avurlAsset as! AVURLAsset
+            DispatchQueue.main.async(execute: {
+                self.setVideoThumbnailFromURL(newObj.url)
+            })
+        })
     }
 }
 
