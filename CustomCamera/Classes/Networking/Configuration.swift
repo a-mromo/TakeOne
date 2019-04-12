@@ -10,15 +10,10 @@ import Foundation
 
 struct API {
 
-    static let APIKey = "b3c3371f0580a7421b25088249531f62"
+    static let APIKey = "DARKSKY_API_KEY"
     static let baseURL = URL(string: "https://api.darksky.net/forecast/")!
 
     static var authenticatedBaseURL: URL {
         return baseURL.appendingPathComponent(APIKey)
     }
-}
-
-struct Defaults {
-    static let latitude: Double = 43.6591
-    static let longitude: Double = 70.2568
 }
