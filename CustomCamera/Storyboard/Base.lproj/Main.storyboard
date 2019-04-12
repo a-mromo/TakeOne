@@ -22,11 +22,16 @@
                                 <rect key="frame" x="0.0" y="10" width="375" height="667"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="40°F" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kk1-Jg-jzQ" customClass="DraggableLabel" customModule="CustomCamera" customModuleProvider="target">
-                                <rect key="frame" x="292.5" y="420" width="58.5" height="38"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBold" family="Helvetica Neue" pointSize="32"/>
-                                <color key="textColor" red="0.3411764706" green="0.35686274509999999" blue="0.36862745099999999" alpha="1" colorSpace="calibratedRGB"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Getting weather forecast..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="18X-hx-4Ok">
+                                <rect key="frame" x="85" y="323" width="204" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="🌤" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kk1-Jg-jzQ" customClass="DraggableLabel" customModule="CustomCamera" customModuleProvider="target">
+                                <rect key="frame" x="279" y="420" width="48" height="57"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="48"/>
+                                <color key="textColor" red="1" green="0.46274509803921571" blue="0.45882352941176469" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="xBO-uG-Fwk" userLabel="Bottom Controls Stack View">
@@ -159,11 +164,16 @@
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="tfk-RE-PY5" firstAttribute="width" secondItem="7yT-gL-mbm" secondAttribute="width" id="0w5-qQ-ZWJ"/>
+                            <constraint firstItem="kTU-Uq-bDP" firstAttribute="trailing" secondItem="Kk1-Jg-jzQ" secondAttribute="trailing" constant="48" id="3l7-r6-Pqo"/>
                             <constraint firstItem="xBO-uG-Fwk" firstAttribute="leading" secondItem="kTU-Uq-bDP" secondAttribute="leading" id="4cQ-Dc-6dJ"/>
                             <constraint firstItem="tfk-RE-PY5" firstAttribute="centerY" secondItem="kTU-Uq-bDP" secondAttribute="centerY" id="EGi-gZ-gQd"/>
+                            <constraint firstItem="Kk1-Jg-jzQ" firstAttribute="top" secondItem="kTU-Uq-bDP" secondAttribute="top" constant="400" id="PaJ-mb-IlZ"/>
                             <constraint firstItem="kTU-Uq-bDP" firstAttribute="trailing" secondItem="xBO-uG-Fwk" secondAttribute="trailing" id="Pfh-ko-iq9"/>
                             <constraint firstItem="tfk-RE-PY5" firstAttribute="height" secondItem="7yT-gL-mbm" secondAttribute="height" id="TU9-Un-ytE"/>
                             <constraint firstItem="tfk-RE-PY5" firstAttribute="centerX" secondItem="kTU-Uq-bDP" secondAttribute="centerX" id="Zbl-gv-Wbo"/>
+                            <constraint firstItem="18X-hx-4Ok" firstAttribute="centerY" secondItem="tfk-RE-PY5" secondAttribute="centerY" id="dGU-hZ-eAA"/>
+                            <constraint firstItem="Kk1-Jg-jzQ" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="kTU-Uq-bDP" secondAttribute="leading" symbolic="YES" id="ffX-BB-5E9"/>
+                            <constraint firstItem="18X-hx-4Ok" firstAttribute="centerX" secondItem="tfk-RE-PY5" secondAttribute="centerX" id="nWE-ZZ-60V"/>
                             <constraint firstItem="kTU-Uq-bDP" firstAttribute="bottom" secondItem="xBO-uG-Fwk" secondAttribute="bottom" id="qT2-ij-AWl"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="kTU-Uq-bDP"/>
@@ -174,6 +184,7 @@
                         <outlet property="captureButton" destination="Z2T-Td-ZSe" id="ORh-9I-0iE"/>
                         <outlet property="collectionView" destination="Nax-Bs-bFs" id="gns-B5-0dh"/>
                         <outlet property="colorPaletteButton" destination="OdX-7t-SEf" id="wBG-vk-9qp"/>
+                        <outlet property="emptyWeatherStateLabel" destination="18X-hx-4Ok" id="AZu-7b-TgQ"/>
                         <outlet property="temperatureLabel" destination="Kk1-Jg-jzQ" id="5bL-r5-R0v"/>
                         <outlet property="thumbnailButton" destination="gyn-ZQ-iLV" id="LIa-1O-5zz"/>
                         <outlet property="timeLabel" destination="CZ1-gG-U29" id="KJG-n6-4aH"/>

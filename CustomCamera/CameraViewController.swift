@@ -46,6 +46,8 @@ class CameraViewController: UIViewController {
     @IBOutlet weak var colorPaletteButton: UIButton!
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var temperatureLabel: DraggableLabel!
+    
+    @IBOutlet weak var emptyWeatherStateLabel: UILabel!
     @IBOutlet weak var botomControlsStackView: UIStackView!
     @IBOutlet weak var collectionView: UICollectionView!
     
@@ -117,25 +119,13 @@ class CameraViewController: UIViewController {
         cameraPreview.addSubview(exposureMarker)
     }
     
-    private func setupCollectionView(){
-        collectionView.delegate = self
-        collectionView.dataSource = self
-        collectionView.isHidden = true
-    }
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        getColorPalette()
-        setupCollectionView()
+        setupBottomControls()
         setupSessionAndPreview()
         startSession()
-//        getWeatherData()
-        setThumbnailPicture()
-        pinBackground(bottomControlsBackgroundView, to: botomControlsStackView)
-        thumbnailButton.layer.cornerRadius = thumbnailButton.frame.width / 2
-        thumbnailButton.imageView?.layer.cornerRadius = thumbnailButton.frame.width / 2
-        thumbnailButton.clipsToBounds = true
+        enableLocationServices()
     }
     
     override func viewDidLayoutSubviews() {
@@ -177,6 +167,25 @@ class CameraViewController: UIViewController {
 }
 
 extension CameraViewController {
+    // MARK: Setup
+    private func setupBottomControls() {
+        getColorPalette()
+        setupCollectionView()
+        setThumbnailPicture()
+        pinBackground(bottomControlsBackgroundView, to: botomControlsStackView)
+        
+        thumbnailButton.layer.cornerRadius = thumbnailButton.frame.width / 2
+        thumbnailButton.imageView?.layer.cornerRadius = thumbnailButton.frame.width / 2
+        thumbnailButton.clipsToBounds = true
+    }
+    
+    private func setupCollectionView(){
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.isHidden = true
+    }
+    
+    
     // MARK: Helpers
     private func pinBackground(_ view: UIView, to stackView: UIStackView) {
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -185,16 +194,48 @@ extension CameraViewController {
     }
     
     private func setThumbnailPicture() {
-        let fetchOptions = PHFetchOptions()
-        fetchOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: true)]
-        let fetchResult = PHAsset.fetchAssets(with: .video, options: fetchOptions).lastObject
-        PHImageManager().requestAVAsset(forVideo: fetchResult!, options: nil, resultHandler: { (avurlAsset, audioMix, dict) in
-            let newObj = avurlAsset as! AVURLAsset
-            DispatchQueue.main.async(execute: {
-                self.setVideoThumbnailFromURL(newObj.url)
+        if PHPhotoLibrary.authorizationStatus() == PHAuthorizationStatus.authorized {
+            let fetchOptions = PHFetchOptions()
+            fetchOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: true)]
+            let fetchResult = PHAsset.fetchAssets(with: .video, options: fetchOptions).lastObject
+            PHImageManager().requestAVAsset(forVideo: fetchResult!, options: nil, resultHandler: { (avurlAsset, audioMix, dict) in
+                let newObj = avurlAsset as! AVURLAsset
+                DispatchQueue.main.async(execute: {
+                    self.setVideoThumbnailFromURL(newObj.url)
+                })
             })
-        })
+        }
+        
     }
+    
+    private func enableLocationServices() {
+//        self.locationManager.requestAlwaysAuthorization()
+//
+//        if CLLocationManager.locationServicesEnabled() {
+//            locationManager.delegate = self
+//            locationManager.desiredAccuracy = kCLLocationAccuracyKilometer
+//            locationManager.startUpdatingLocation()
+//        }
+        locationManager.delegate = self
+        
+        switch CLLocationManager.authorizationStatus() {
+        case .notDetermined:
+            // Request when-in-use authorization initially
+            locationManager.requestWhenInUseAuthorization()
+            break
+            
+        case .restricted, .denied:
+            // Disable location features
+            break
+            
+        case .authorizedWhenInUse, .authorizedAlways:
+            // Enable location features
+            locationManager.requestLocation()
+            locationManager.startMonitoringSignificantLocationChanges()
+            break
+        }
+    }
+    
 }
 
 extension CameraViewController {
@@ -577,8 +618,8 @@ extension CameraViewController: AVCaptureFileOutputRecordingDelegate {
 
 extension CameraViewController {
     
-    func getWeatherData() {
-        dataManager.weatherDataForLocation(latitude: Defaults.latitude, longitude: Defaults.longitude) { (response, error)  in
+    func getWeatherData(latitude: Double, longitude: Double) {
+        dataManager.weatherDataForLocation(latitude: latitude, longitude: longitude) { (response, error)  in
             if let error = error {
                 print("Failed to get data from url", error)
                 return
@@ -586,6 +627,7 @@ extension CameraViewController {
             
             guard let response = response else { return }
             self.weatherData = response
+            print(response)
             self.updateWeatherLabel(temperature: self.weatherData?.hourData.data.first?.temperature ?? 0)
         }
     }
@@ -655,5 +697,22 @@ extension CameraViewController: UICollectionViewDelegateFlowLayout {
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: 50, height: 60)
+    }
+}
+
+extension CameraViewController: CLLocationManagerDelegate {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        guard let location = locations.last?.coordinate else {
+            return
+        }
+        getWeatherData(latitude: location.latitude, longitude: location.longitude)
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        enableLocationServices()
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        
     }
 }
