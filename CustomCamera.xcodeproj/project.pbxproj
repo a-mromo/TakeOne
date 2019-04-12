@@ -24,6 +24,7 @@
 		5D70078D225FF1AD0094EAEF /* VideoEffects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D70078C225FF1AD0094EAEF /* VideoEffects.swift */; };
 		5D7007932260B77C0094EAEF /* CopyableLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D7007922260B77C0094EAEF /* CopyableLabel.swift */; };
 		5D70079A2260FA560094EAEF /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D7007992260FA560094EAEF /* UIView+Extension.swift */; };
+		5D70079C226116800094EAEF /* DraggableLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D70079B226116800094EAEF /* DraggableLabel.swift */; };
 		5D89D5D4225ED27900843C99 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D89D5D3225ED27900843C99 /* Configuration.swift */; };
 		5D89D5D6225ED4E100843C99 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D89D5D5225ED4E100843C99 /* DataManager.swift */; };
 /* End PBXBuildFile section */
@@ -69,6 +70,7 @@
 		5D70078C225FF1AD0094EAEF /* VideoEffects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoEffects.swift; sourceTree = "<group>"; };
 		5D7007922260B77C0094EAEF /* CopyableLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopyableLabel.swift; sourceTree = "<group>"; };
 		5D7007992260FA560094EAEF /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
+		5D70079B226116800094EAEF /* DraggableLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DraggableLabel.swift; sourceTree = "<group>"; };
 		5D89D5D3225ED27900843C99 /* Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
 		5D89D5D5225ED4E100843C99 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -211,6 +213,7 @@
 			isa = PBXGroup;
 			children = (
 				5D7007922260B77C0094EAEF /* CopyableLabel.swift */,
+				5D70079B226116800094EAEF /* DraggableLabel.swift */,
 			);
 			path = Custom;
 			sourceTree = "<group>";
@@ -365,6 +368,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5D70079C226116800094EAEF /* DraggableLabel.swift in Sources */,
 				5D89D5D4225ED27900843C99 /* Configuration.swift in Sources */,
 				5D70079A2260FA560094EAEF /* UIView+Extension.swift in Sources */,
 				5D652A8A225BD9970069017A /* ColorSwatch.swift in Sources */,

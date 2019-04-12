@@ -45,7 +45,7 @@ class CameraViewController: UIViewController {
     @IBOutlet weak var toggleCameraButton: UIButton!
     @IBOutlet weak var colorPaletteButton: UIButton!
     @IBOutlet weak var timeLabel: UILabel!
-    @IBOutlet weak var temperatureLabel: CopyableLabel!
+    @IBOutlet weak var temperatureLabel: DraggableLabel!
     @IBOutlet weak var botomControlsStackView: UIStackView!
     @IBOutlet weak var collectionView: UICollectionView!
     
