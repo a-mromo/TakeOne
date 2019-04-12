@@ -120,15 +120,12 @@
 			isa = PBXGroup;
 			children = (
 				5D1732F12256FDA400E140E4 /* AppDelegate.swift */,
-				5D652A91225BFC4C0069017A /* Views */,
 				5D1732F32256FDA400E140E4 /* CameraViewController.swift */,
-				5D1732F52256FDA400E140E4 /* Main.storyboard */,
-				5D1732F82256FDA600E140E4 /* Assets.xcassets */,
-				5D1732FA2256FDA600E140E4 /* LaunchScreen.storyboard */,
-				5D1732FD2256FDA600E140E4 /* Info.plist */,
+				5D652A91225BFC4C0069017A /* Views */,
 				5D7007902260B7340094EAEF /* Classes */,
-				5D652A8D225BE82E0069017A /* Extension */,
-				5D89D5D2225ED20C00843C99 /* Networking */,
+				5D7007982260C59E0094EAEF /* Storyboard */,
+				5D1732F82256FDA600E140E4 /* Assets.xcassets */,
+				5D1732FD2256FDA600E140E4 /* Info.plist */,
 			);
 			path = CustomCamera;
 			sourceTree = "<group>";
@@ -200,7 +197,9 @@
 			children = (
 				5D652A8B225BE38E0069017A /* Model */,
 				5D652A90225BF7010069017A /* Helpers */,
+				5D89D5D2225ED20C00843C99 /* Networking */,
 				5D7007912260B7550094EAEF /* Custom */,
+				5D652A8D225BE82E0069017A /* Extension */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -211,6 +210,15 @@
 				5D7007922260B77C0094EAEF /* CopyableLabel.swift */,
 			);
 			path = Custom;
+			sourceTree = "<group>";
+		};
+		5D7007982260C59E0094EAEF /* Storyboard */ = {
+			isa = PBXGroup;
+			children = (
+				5D1732F52256FDA400E140E4 /* Main.storyboard */,
+				5D1732FA2256FDA600E140E4 /* LaunchScreen.storyboard */,
+			);
+			path = Storyboard;
 			sourceTree = "<group>";
 		};
 		5D89D5D2225ED20C00843C99 /* Networking */ = {
