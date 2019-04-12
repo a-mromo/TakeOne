@@ -20,6 +20,9 @@
 		5D652A88225BD7470069017A /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D652A87225BD7470069017A /* UIColor+Extension.swift */; };
 		5D652A8A225BD9970069017A /* ColorSwatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D652A89225BD9970069017A /* ColorSwatch.swift */; };
 		5D652A8F225BE9BD0069017A /* ColorData.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D652A8E225BE9BD0069017A /* ColorData.json */; };
+		5D70078B225FF14D0094EAEF /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D70078A225FF14D0094EAEF /* UIImage+Extension.swift */; };
+		5D70078D225FF1AD0094EAEF /* VideoEffects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D70078C225FF1AD0094EAEF /* VideoEffects.swift */; };
+		5D7007932260B77C0094EAEF /* CopyableLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D7007922260B77C0094EAEF /* CopyableLabel.swift */; };
 		5D89D5D4225ED27900843C99 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D89D5D3225ED27900843C99 /* Configuration.swift */; };
 		5D89D5D6225ED4E100843C99 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D89D5D5225ED4E100843C99 /* DataManager.swift */; };
 /* End PBXBuildFile section */
@@ -61,6 +64,9 @@
 		5D652A87225BD7470069017A /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 		5D652A89225BD9970069017A /* ColorSwatch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorSwatch.swift; sourceTree = "<group>"; };
 		5D652A8E225BE9BD0069017A /* ColorData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ColorData.json; sourceTree = "<group>"; };
+		5D70078A225FF14D0094EAEF /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
+		5D70078C225FF1AD0094EAEF /* VideoEffects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoEffects.swift; sourceTree = "<group>"; };
+		5D7007922260B77C0094EAEF /* CopyableLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopyableLabel.swift; sourceTree = "<group>"; };
 		5D89D5D3225ED27900843C99 /* Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
 		5D89D5D5225ED4E100843C99 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -120,10 +126,9 @@
 				5D1732F82256FDA600E140E4 /* Assets.xcassets */,
 				5D1732FA2256FDA600E140E4 /* LaunchScreen.storyboard */,
 				5D1732FD2256FDA600E140E4 /* Info.plist */,
-				5D652A8B225BE38E0069017A /* Model */,
+				5D7007902260B7340094EAEF /* Classes */,
 				5D652A8D225BE82E0069017A /* Extension */,
 				5D89D5D2225ED20C00843C99 /* Networking */,
-				5D652A90225BF7010069017A /* Helpers */,
 			);
 			path = CustomCamera;
 			sourceTree = "<group>";
@@ -169,6 +174,7 @@
 			isa = PBXGroup;
 			children = (
 				5D652A87225BD7470069017A /* UIColor+Extension.swift */,
+				5D70078A225FF14D0094EAEF /* UIImage+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -176,6 +182,7 @@
 		5D652A90225BF7010069017A /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				5D70078C225FF1AD0094EAEF /* VideoEffects.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -186,6 +193,24 @@
 				5D652A85225BB0950069017A /* ColorSwatchCell.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		5D7007902260B7340094EAEF /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				5D652A8B225BE38E0069017A /* Model */,
+				5D652A90225BF7010069017A /* Helpers */,
+				5D7007912260B7550094EAEF /* Custom */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		5D7007912260B7550094EAEF /* Custom */ = {
+			isa = PBXGroup;
+			children = (
+				5D7007922260B77C0094EAEF /* CopyableLabel.swift */,
+			);
+			path = Custom;
 			sourceTree = "<group>";
 		};
 		5D89D5D2225ED20C00843C99 /* Networking */ = {
@@ -334,8 +359,11 @@
 				5D1732F42256FDA400E140E4 /* CameraViewController.swift in Sources */,
 				5D2344E7225FB22100C98C8D /* WeatherHourData.swift in Sources */,
 				5D89D5D6225ED4E100843C99 /* DataManager.swift in Sources */,
+				5D7007932260B77C0094EAEF /* CopyableLabel.swift in Sources */,
 				5D1732F22256FDA400E140E4 /* AppDelegate.swift in Sources */,
+				5D70078D225FF1AD0094EAEF /* VideoEffects.swift in Sources */,
 				5D2344E5225FB1E900C98C8D /* WeatherData.swift in Sources */,
+				5D70078B225FF14D0094EAEF /* UIImage+Extension.swift in Sources */,
 				5D652A86225BB0950069017A /* ColorSwatchCell.swift in Sources */,
 				5D652A88225BD7470069017A /* UIColor+Extension.swift in Sources */,
 			);

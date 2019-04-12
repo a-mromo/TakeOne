@@ -33,8 +33,8 @@ class CameraViewController: UIViewController {
     @IBOutlet weak var thumbnailButton: UIButton!
     @IBOutlet weak var cameraPreview: UIView!
     @IBOutlet weak var captureButton: UIButton!
-    @IBOutlet weak var timeLabel: UILabel!
-    @IBOutlet weak var temperatureLabel: UILabel!
+    @IBOutlet weak var timeLabel: CopyableLabel!
+    @IBOutlet var temperatureLabel: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
     
     
@@ -62,7 +62,6 @@ class CameraViewController: UIViewController {
             captureSession.addOutput(imageOutput)
         }
         
-        // Setup Microphone
         let microphone = AVCaptureDevice.default(for: AVMediaType.audio)
         
         do {
@@ -75,12 +74,10 @@ class CameraViewController: UIViewController {
             return
         }
         
-        // Still image output
         if captureSession.canAddOutput(imageOutput) {
             captureSession.addOutput(imageOutput)
         }
         
-        // Movie output
         if captureSession.canAddOutput(movieOutput) {
             captureSession.addOutput(movieOutput)
         }
@@ -183,7 +180,6 @@ extension CameraViewController {
                 return
         }
         
-        // Create new input and update capture session.
         do {
             let input = try AVCaptureDeviceInput(device: newCamera)
             captureSession.beginConfiguration()
@@ -259,7 +255,7 @@ extension CameraViewController {
     
     func focusAtPoint(_ point: CGPoint) {
         let device = activeInput.device
-        // Make sure the device supports focus on POI and Auto Focus.
+
         if (device.isFocusPointOfInterestSupported) &&
             (device.isFocusModeSupported(AVCaptureDevice.FocusMode.autoFocus)) {
             do {
@@ -347,7 +343,7 @@ extension CameraViewController {
             PHAssetChangeRequest.creationRequestForAsset(from: image)
         }) { success, error in
             if success {
-                // Set thumbnail
+
                 self.setPhotoThumbnail(image)
             } else {
                 print("Error writing to photo library: ", String(describing: error))
@@ -516,8 +512,10 @@ extension CameraViewController: AVCaptureFileOutputRecordingDelegate {
             print("Error recording movie:", error)
             return
         }
-        // Write video to library
-        saveMovieToLibrary(outputFileURL)
+
+        let videoAsset = AVAsset.init(url: outputFileURL)
+        guard let label = temperatureLabel.copy() as? UILabel else { return }
+        videoOutput(videoAsset: videoAsset, label: label)
         captureButton.setImage(UIImage(named: "Capture-Inactive"), for: .normal)
         stopTimer()
     }
@@ -565,17 +563,15 @@ extension CameraViewController {
 
 extension CameraViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func startMediaBrowserFromViewController(viewController: UIViewController, usingDelegate delegate: UINavigationControllerDelegate & UIImagePickerControllerDelegate ) -> Bool {
-        // 1
+    
         if UIImagePickerController.isSourceTypeAvailable(.savedPhotosAlbum) == false { return false }
         
-        // 2
         let mediaUI = UIImagePickerController()
         mediaUI.sourceType = .savedPhotosAlbum
         mediaUI.mediaTypes = [kUTTypeMovie as String]
         mediaUI.allowsEditing = false
         mediaUI.delegate = delegate
         
-        // 3
         present(mediaUI, animated: true, completion: nil)
         return true
     }
