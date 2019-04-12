@@ -30,9 +30,20 @@ class CameraViewController: UIViewController {
     private var colorPalette = [ColorSwatch]()
     private var weatherData: WeatherData?
     
+    private lazy var bottomControlsBackgroundView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor(white: 0, alpha: 0.4)
+        view.clipsToBounds = true
+        view.layer.cornerRadius = 24
+        view.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
+        return view
+    }()
+    
     @IBOutlet weak var thumbnailButton: UIButton!
     @IBOutlet weak var cameraPreview: UIView!
     @IBOutlet weak var captureButton: UIButton!
+    @IBOutlet weak var toggleCameraButton: UIButton!
+    @IBOutlet weak var colorPaletteButton: UIButton!
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var temperatureLabel: CopyableLabel!
     @IBOutlet weak var botomControlsStackView: UIStackView!
@@ -109,6 +120,7 @@ class CameraViewController: UIViewController {
     private func setupCollectionView(){
         collectionView.delegate = self
         collectionView.dataSource = self
+        collectionView.isHidden = true
     }
     
     
@@ -119,7 +131,7 @@ class CameraViewController: UIViewController {
         setupSessionAndPreview()
         startSession()
 //        getWeatherData()
-        
+        pinBackground(bottomControlsBackgroundView, to: botomControlsStackView)
     }
     
     override func viewDidLayoutSubviews() {
@@ -140,7 +152,6 @@ class CameraViewController: UIViewController {
         return true
     }
     
-    
     @IBAction func cameraToggleTapped(_ sender: Any) {
         toggleCameras()
     }
@@ -151,6 +162,22 @@ class CameraViewController: UIViewController {
     
     @IBAction func captureTapped(_ sender: Any) {
         captureMovie()
+    }
+    
+    @IBAction func colorPaletteTapped(_ sender: UIButton) {
+        guard !movieOutput.isRecording else { return }
+        collectionView.isHidden = !collectionView.isHidden
+        colorPaletteButton.setImage(collectionView.isHidden ? UIImage(named: "ColorPalette-Inactive") : UIImage(named: "ColorPalette-Active"), for: .normal)
+    }
+    
+}
+
+extension CameraViewController {
+    // MARK: Helpers
+    private func pinBackground(_ view: UIView, to stackView: UIStackView) {
+        view.translatesAutoresizingMaskIntoConstraints = false
+        stackView.insertSubview(view, at: 0)
+        view.pin(to: stackView)
     }
 }
 
@@ -170,10 +197,13 @@ extension CameraViewController {
         switch activeInput.device.position {
         case .back:
             newPosition = .front
+            toggleCameraButton.setImage(UIImage(named: "CameraSwitch-Active"), for: .normal)
         case .front:
             newPosition = .back
+            toggleCameraButton.setImage(UIImage(named: "CameraSwitch-Inactive"), for: .normal)
         case .unspecified:
             newPosition = .back
+            toggleCameraButton.setImage(UIImage(named: "CameraSwitch-Inactive"), for: .normal)
         }
         
         guard let newCamera = discoverySession.devices
@@ -401,6 +431,11 @@ extension CameraViewController: AVCapturePhotoCaptureDelegate {
 extension CameraViewController: AVCaptureFileOutputRecordingDelegate {
     func captureMovie() {
         if !movieOutput.isRecording {
+            if !collectionView.isHidden {
+                collectionView.isHidden = true
+                colorPaletteButton.setImage(UIImage(named: "ColorPalette-Inactive"), for: .normal)
+            }
+            
             guard let connection = movieOutput.connection(with: .video) else {
                 return
             }
@@ -603,6 +638,6 @@ extension CameraViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 50, height: 50)
+        return CGSize(width: 50, height: 60)
     }
 }
