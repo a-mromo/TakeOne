@@ -33,8 +33,8 @@ class CameraViewController: UIViewController {
     @IBOutlet weak var thumbnailButton: UIButton!
     @IBOutlet weak var cameraPreview: UIView!
     @IBOutlet weak var captureButton: UIButton!
-    @IBOutlet weak var timeLabel: CopyableLabel!
-    @IBOutlet var temperatureLabel: UILabel!
+    @IBOutlet weak var timeLabel: UILabel!
+    @IBOutlet weak var temperatureLabel: CopyableLabel!
     @IBOutlet weak var collectionView: UICollectionView!
     
     
