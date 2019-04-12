@@ -1,5 +1,6 @@
 # TakeOne
 Take One Custom Camera for iOS 
+[Walkthrough](https://youtu.be/R2sGQxZrYc4)
 
 # Features: 
 
