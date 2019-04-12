@@ -124,6 +124,7 @@ class CameraViewController: UIViewController {
         super.viewDidLoad()
         setupBottomControls()
         setupSessionAndPreview()
+        requestPhotoLibraryPermission()
         startSession()
         enableLocationServices()
     }
@@ -208,14 +209,20 @@ extension CameraViewController {
         
     }
     
+    private func requestPhotoLibraryPermission() {
+        let photos = PHPhotoLibrary.authorizationStatus()
+        if photos == .notDetermined {
+            PHPhotoLibrary.requestAuthorization({status in
+                if status == .authorized{
+                self.setThumbnailPicture()
+                } else {
+                    
+                }
+            })
+        }
+    }
+    
     private func enableLocationServices() {
-//        self.locationManager.requestAlwaysAuthorization()
-//
-//        if CLLocationManager.locationServicesEnabled() {
-//            locationManager.delegate = self
-//            locationManager.desiredAccuracy = kCLLocationAccuracyKilometer
-//            locationManager.startUpdatingLocation()
-//        }
         locationManager.delegate = self
         
         switch CLLocationManager.authorizationStatus() {
@@ -628,7 +635,10 @@ extension CameraViewController {
             guard let response = response else { return }
             self.weatherData = response
             print(response)
-            self.updateWeatherLabel(temperature: self.weatherData?.hourData.data.first?.temperature ?? 0)
+            DispatchQueue.main.async {
+                self.emptyWeatherStateLabel.isHidden = true
+                self.updateWeatherLabel(temperature: self.weatherData?.hourData.data.first?.temperature ?? 0)
+            }
         }
     }
     
