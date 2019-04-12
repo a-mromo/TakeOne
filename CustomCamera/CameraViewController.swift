@@ -15,35 +15,35 @@ import MobileCoreServices
 
 class CameraViewController: UIViewController {
     
-    let captureSession = AVCaptureSession()
-    var previewLayer: AVCaptureVideoPreviewLayer!
-    var activeInput: AVCaptureDeviceInput!
-    let imageOutput = AVCapturePhotoOutput()
-    let movieOutput = AVCaptureMovieFileOutput()
+    private let captureSession = AVCaptureSession()
+    private var previewLayer: AVCaptureVideoPreviewLayer!
+    private var activeInput: AVCaptureDeviceInput!
+    private let imageOutput = AVCapturePhotoOutput()
+    private let movieOutput = AVCaptureMovieFileOutput()
     
-    let locationManager = CLLocationManager()
-    var currentUserLocation: CLLocation?
+    private let locationManager = CLLocationManager()
+    private var currentUserLocation: CLLocation?
     
-    var focusMarker: UIImageView!
-    var exposureMarker: UIImageView!
+    private var focusMarker: UIImageView!
+    private var exposureMarker: UIImageView!
     
-    var colorPalette = [ColorSwatch]()
-    var weatherData: WeatherData?
+    private var colorPalette = [ColorSwatch]()
+    private var weatherData: WeatherData?
     
     @IBOutlet weak var thumbnailButton: UIButton!
     @IBOutlet weak var cameraPreview: UIView!
     @IBOutlet weak var captureButton: UIButton!
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var temperatureLabel: CopyableLabel!
+    @IBOutlet weak var botomControlsStackView: UIStackView!
     @IBOutlet weak var collectionView: UICollectionView!
-    
     
     fileprivate var adjustingExposureContext: String = ""
     fileprivate var updateTimer: Timer!
     
     private let dataManager = DataManager(baseURL: API.authenticatedBaseURL)
     
-    func setupSessionAndPreview() {
+    private func setupSessionAndPreview() {
         captureSession.sessionPreset = .high
         let camera = AVCaptureDevice.default(for: .video)
         
@@ -106,7 +106,7 @@ class CameraViewController: UIViewController {
         cameraPreview.addSubview(exposureMarker)
     }
     
-    func setupCollectionView(){
+    private func setupCollectionView(){
         collectionView.delegate = self
         collectionView.dataSource = self
     }
@@ -118,7 +118,8 @@ class CameraViewController: UIViewController {
         setupCollectionView()
         setupSessionAndPreview()
         startSession()
-        getWeatherData()
+//        getWeatherData()
+        
     }
     
     override func viewDidLayoutSubviews() {

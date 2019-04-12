@@ -20,7 +20,7 @@
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tfk-RE-PY5" userLabel="CameraPreview">
                                 <rect key="frame" x="0.0" y="10" width="375" height="667"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="40°F" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kk1-Jg-jzQ" customClass="CopyableLabel" customModule="CustomCamera" customModuleProvider="target">
                                 <rect key="frame" x="292.5" y="420" width="58.5" height="38"/>
@@ -153,7 +153,7 @@
                                 </subviews>
                             </stackView>
                         </subviews>
-                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.29999999999999999" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="tfk-RE-PY5" firstAttribute="width" secondItem="7yT-gL-mbm" secondAttribute="width" id="0w5-qQ-ZWJ"/>
                             <constraint firstItem="xBO-uG-Fwk" firstAttribute="leading" secondItem="kTU-Uq-bDP" secondAttribute="leading" id="4cQ-Dc-6dJ"/>
@@ -169,6 +169,7 @@
                         <viewLayoutGuide key="safeArea" id="kTU-Uq-bDP"/>
                     </view>
                     <connections>
+                        <outlet property="botomControlsStackView" destination="xBO-uG-Fwk" id="bNH-Kn-TdC"/>
                         <outlet property="cameraPreview" destination="tfk-RE-PY5" id="g6F-A8-2p0"/>
                         <outlet property="captureButton" destination="Z2T-Td-ZSe" id="ORh-9I-0iE"/>
                         <outlet property="collectionView" destination="Nax-Bs-bFs" id="gns-B5-0dh"/>
