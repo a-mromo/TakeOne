@@ -4,10 +4,10 @@ Take One Custom Camera for iOS
 
 ## Features: 
 
-Drag text label on top of camera input to desired location on the screen.
-Save video with labels to device.
-Change label color.
-Get current temperature based on user's location.
+* Drag text label on top of camera input to desired location on the screen.
+* Save video with labels to device.
+* Change label color.
+* Get current temperature based on user's location.
 
 ## Demo
 [![Demo Video](https://i.imgur.com/kGlHgX3.png)](https://youtu.be/R2sGQxZrYc4 "Everything Is AWESOME")
